@@ -90,10 +90,8 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   const [isDocDeleted, setIsDocDeleted] = useState<boolean>(false);
   const [deleteDocPopup, setDeleteDocPopup] = useState<boolean>(false);
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
-  const [email, setEmail] = useState<string | undefined>(
-    "test1112223@gmail.com"
-  );
-  const [password, setPassword] = useState<string | undefined>("123Pass123");
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string | undefined>(
     ""
   );
@@ -290,30 +288,25 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
           password,
         },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-
-      console.log(Object.keys(response.headers));
 
       if (
         response?.data?.status === "success" &&
         response?.data?.data?.user?._id
       ) {
-        setTimeout(async () => {
-          const docResponse = await axios.get(
-            "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-            {
-              withCredentials: true,
-            }
-          );
+        const docResponse = await axios.get(
+          "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
+          {
+            withCredentials: true,
+          }
+        );
 
-          console.log(docResponse);
-        }, 2000);
-        // navigate("/markdown");
+        console.log(docResponse.data.data.data);
+        setDocuments(docResponse?.data?.data?.data);
+        navigate("/markdown");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

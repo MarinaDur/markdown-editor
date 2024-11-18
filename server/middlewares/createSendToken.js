@@ -20,7 +20,7 @@ export const sendToken = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   res.cookie("jwt", token, cookieOptions);
-  res.header("Access-Control-Allow-Credentials", true);
+  // res.header("Access-Control-Allow-Credentials", true);
 
   console.log("JWT cookie set:", token);
   user.password = undefined;

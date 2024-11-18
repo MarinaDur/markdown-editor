@@ -25,7 +25,9 @@ export const signup = [
       passwordConfirm: req.body.passwordConfirm,
     });
 
-    sendToken(newUser, 201, res);
+    req.user = newUser;
+    next();
+    // sendToken(newUser, 201, res);
   }),
 ];
 
