@@ -25,7 +25,12 @@ export const createDefaultDocsOnSignup = catchAsync(async (req, res, next) => {
 
   await Document.insertMany(documents);
 
-  sendToken(newUser, 201, res);
+  res.status(201).json({
+    status: "success",
+    data: {
+      documents,
+    },
+  });
 });
 
 export const postDoc = catchAsync(async (req, res, next) => {

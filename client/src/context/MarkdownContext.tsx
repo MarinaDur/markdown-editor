@@ -304,7 +304,6 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
           }
         );
 
-        console.log(docResponse.data.data.data);
         setDocuments(docResponse?.data?.data?.data);
         navigate("/markdown");
       }
@@ -322,8 +321,6 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
       setPassword("");
     }
   }
-
-  useEffect(function () {});
 
   function handleErrorReset() {
     if (error !== null) {

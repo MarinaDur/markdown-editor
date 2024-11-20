@@ -1,6 +1,7 @@
 import express from "express";
 import { protect } from "../controllers/authController.js";
 import {
+  createDefaultDocsOnSignup,
   deleteUserOneDoc,
   getUserDocs,
   getUserOneDoc,
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.use(protect);
 
+router.post("/createDefaultDocsOnSignup", createDefaultDocsOnSignup);
 router.post("/postDoc", postDoc);
 router.get("/getUserDocs", getUserDocs);
 router

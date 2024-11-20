@@ -26,8 +26,8 @@ export const signup = [
     });
 
     req.user = newUser;
-    next();
-    // sendToken(newUser, 201, res);
+   
+    sendToken(newUser, 201, res);
   }),
 ];
 

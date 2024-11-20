@@ -13,7 +13,7 @@ import { createDefaultDocsOnSignup } from "../controllers/docController.js";
 
 const router = express.Router();
 
-router.post("/signup", signup, createDefaultDocsOnSignup);
+router.post("/signup", signup);
 router.post("/login", login);
 router.get("/getMe", protect, getMe);
 router.post("/logout", logout);
