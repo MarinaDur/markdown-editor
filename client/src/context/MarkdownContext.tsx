@@ -8,6 +8,7 @@ import {
   useCallback,
   ChangeEventHandler,
 } from "react";
+
 import axios from "axios";
 import data from "../data/data.json";
 
@@ -16,11 +17,13 @@ const docsData: MarkDownDocs[] = [
     createdAt: data[0].createdAt,
     name: data[0].name,
     content: data[0].content,
+    _id: "12",
   },
   {
     createdAt: data[1].createdAt,
     name: data[1].name,
     content: data[1].content,
+    _id: "89",
   },
 ];
 
@@ -32,7 +35,7 @@ interface MarkdownContextProps {
   isPreview: boolean;
   handleShowPreview: () => void;
   documents: MarkDownDocs[];
-  handleCurrentDoc: (docIndex: number) => void;
+  handleCurrentDoc: (docIndex: number, docId: string) => void;
   currentDoc: number | undefined;
   handleAddNewDoc: () => void;
   docNameValue: string | undefined;
@@ -59,12 +62,18 @@ interface MarkdownContextProps {
   handleError: (err: string | null) => void;
   handleErrorReset: () => void;
   isLoading: boolean;
+  handleLogout: () => void;
+  setDocuments: React.Dispatch<React.SetStateAction<MarkDownDocs[]>>;
+  setCurrentDoc: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setCurrentDocId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setMarkdownValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface MarkDownDocs {
   createdAt: string;
   name: string;
   content: string;
+  _id: string;
 }
 
 interface MarkdownProviderProps {
@@ -83,6 +92,9 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     documents[1]?.content
   );
   const [currentDoc, setCurrentDoc] = useState<number | undefined>(1);
+  const [currentDocId, setCurrentDocId] = useState<string | undefined>(
+    documents[currentDoc || 1]?._id
+  );
   const [docNameValue, setDocNamevalue] = useState<string | undefined>(
     documents[1]?.name
   );
@@ -97,8 +109,11 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoggedin, setLogIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
+  console.log("is logged in ", isLoggedIn);
+  console.log("current doc id ", currentDocId);
+  console.log("current doc ", currentDoc);
   function handleToggleMenu() {
     setIsMenuOpen((prev) => !prev);
   }
@@ -112,9 +127,12 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   }
 
   const handleCurrentDoc = useCallback(
-    (docIndex: number) => {
-      console.log(docIndex);
+    (docIndex: number, docId: string) => {
+      console.log("doc Index", docIndex);
+      console.log("docId", documents[docIndex]?._id);
+      sessionStorage.setItem("currentDoc", `${docIndex}`);
       setCurrentDoc(docIndex);
+      setCurrentDocId(documents[docIndex]?._id);
       setMarkdownValue(documents[docIndex]?.content);
       setIsMenuOpen(false);
       setDocNamevalue(documents[docIndex]?.name);
@@ -145,6 +163,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
           createdAt: formattedDate,
           name: `untitled-document-${newDocNumber}.md`,
           content: "",
+          _id: `12345${newDocNumber}`,
         },
         ...prev,
       ];
@@ -157,10 +176,10 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
 
   useEffect(() => {
     if (isNewDocumentAdded) {
-      handleCurrentDoc(0);
+      handleCurrentDoc(0, documents[0]._id);
       setNewDocumentAdded(false);
     }
-  }, [isNewDocumentAdded, handleCurrentDoc]);
+  }, [isNewDocumentAdded, handleCurrentDoc, documents]);
 
   function handleChangeName(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -218,21 +237,62 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
       const newCurrentDoc = updatedCurrentDoc > 0 ? updatedCurrentDoc - 1 : 0;
 
       if (documents.length > 0) {
-        handleCurrentDoc(newCurrentDoc);
+        handleCurrentDoc(newCurrentDoc, documents[newCurrentDoc]?._id);
       } else {
         setMarkdownValue("");
         setDocNamevalue("");
       }
     }
     setIsDocDeleted(false);
-  }, [currentDoc, documents.length, handleCurrentDoc, isDocDeleted]);
+  }, [currentDoc, documents.length, handleCurrentDoc, isDocDeleted, documents]);
 
-  function handleSaveMarkdown() {
-    setDocuments((prev) => {
-      const updatedDocs = [...prev];
-      updatedDocs[currentDoc ?? 0].content = markdownValue ?? "";
-      return updatedDocs;
-    });
+  async function handleSaveMarkdown() {
+    // setDocuments((prev) => {
+    //   const updatedDocs = [...prev];
+    //   updatedDocs[currentDoc ?? 0].content = markdownValue ?? "";
+    //   return updatedDocs;
+    // });
+    setIsLoading(true);
+    console.log("doc id:", currentDocId);
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/v1/documents/${currentDocId}`,
+        {
+          content: markdownValue,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (
+        response?.data?.status === "success" &&
+        response?.data?.data?.user?._id
+      ) {
+        const docResponse = await axios.get(
+          "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
+          {
+            withCredentials: true,
+          }
+        );
+        const userDocs = docResponse?.data?.data?.data;
+
+        setDocuments(userDocs);
+        setMarkdownValue(userDocs[currentDoc || 0]?.content || "");
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        handleError(error.response?.data?.message);
+        console.log(error.response);
+      } else {
+        handleError("An unexpected error occurred");
+        console.error("An unexpected error occurred:", error);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   // async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
@@ -293,25 +353,31 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
         }
       );
 
-      if (
-        response?.data?.status === "success" &&
-        response?.data?.data?.user?._id
-      ) {
-        const docResponse = await axios.get(
-          "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-          {
-            withCredentials: true,
-          }
-        );
+      // if (
+      //   response?.data?.status === "success" &&
+      //   response?.data?.data?.user?._id
+      // ) {
+      //   const docResponse = await axios.get(
+      //     "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
+      //     {
+      //       withCredentials: true,
+      //     }
+      //   );
 
-        setDocuments(docResponse?.data?.data?.data);
-        navigate("/markdown");
-      }
+      //   setDocuments(docResponse?.data?.data?.data);
+      //   setCurrentDocId(docResponse?.data?.data?.data[currentDocId || 0]._id);
+      //   setIsLoggedIn(true);
+      navigate("/markdown");
+      // }
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        setIsLoggedIn(false);
+
         handleError(error.response?.data?.message);
         console.log(error.response);
       } else {
+        setIsLoggedIn(false);
+
         handleError("An unexpected error occurred");
         console.error("An unexpected error occurred:", error);
       }
@@ -321,6 +387,16 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
       setPassword("");
     }
   }
+
+  const handleLogout = () => {
+    console.log("logged out");
+    setIsLoggedIn(false);
+    setDocuments([]);
+    setMarkdownValue("");
+    // Redirect to login page
+  };
+
+  console.log(documents);
 
   function handleErrorReset() {
     if (error !== null) {
@@ -345,7 +421,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     [isDarkMode]
   );
 
-  console.log(error);
+  // console.log(error);
 
   const contextValue: MarkdownContextProps = {
     isMenuOpen,
@@ -379,6 +455,11 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     handleError,
     handleErrorReset,
     isLoading,
+    handleLogout,
+    setDocuments,
+    setCurrentDocId,
+    setMarkdownValue,
+    setCurrentDoc,
   };
 
   return (

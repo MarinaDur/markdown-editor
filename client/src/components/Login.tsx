@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../ui/Input";
 import Paragraph from "../ui/Paragraph";
 import LabelInput from "../ui/LabelInput";
@@ -8,6 +8,7 @@ import LoginSignupTemp from "../ui/LoginSignupTemp";
 import EyeIcon from "../ui/EyeIcon";
 import { useMarkdown } from "../context/MarkdownContext";
 import ErrorPopUp from "../ui/ErrorPopUp";
+import { useEffect } from "react";
 
 const StyledParForgotPassword = styled(Paragraph)`
   color: var(--cl-text-main);
@@ -21,8 +22,24 @@ const StyledPasswordCon = styled(Container)`
 
 function Login() {
   const navigate = useNavigate();
-  const { email, password, handleEmail, handlePassword, handleLogin } =
-    useMarkdown();
+  const {
+    email,
+    password,
+    handleEmail,
+    handlePassword,
+    handleLogin,
+    handleLogout,
+  } = useMarkdown();
+
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   // If the user is on the login page ("/"), trigger logout
+  //   if (location.pathname === "/") {
+  //     handleLogout();
+  //   }
+  // }, [location.pathname, handleLogout]);
+
   return (
     <LoginSignupTemp
       welcomeText="Welcome back"

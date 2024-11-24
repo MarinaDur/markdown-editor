@@ -75,7 +75,7 @@ function Editor({}) {
           placeholder="Type your markdown here..."
           value={markdownValue}
           onChange={handleEditor}
-          onBlur={handleSaveMarkdown}
+          // onBlur={handleSaveMarkdown}
         />
         {/* <StyledDiv></StyledDiv> */}
       </StyledMarkdownCon>

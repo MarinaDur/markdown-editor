@@ -91,7 +91,7 @@ app.use(
 app.use(
   cors({
     origin: "http://localhost:5173", // Allow your client origin
-    methods: "GET,POST,PUT,DELETE", // Specify allowed methods
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Specify allowed methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
     credentials: true, // Enable cookies or authorization headers if needed
   })
