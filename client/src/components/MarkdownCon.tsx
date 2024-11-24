@@ -69,65 +69,27 @@ function MarkdownCon() {
     setCurrentDoc,
   } = useMarkdown();
 
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
+  // useEffect(() => {
+  //   const fetchDocuments = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
 
-          { withCredentials: true }
-        );
+  //         { withCredentials: true }
+  //       );
 
-        setDocuments(response?.data?.data?.data);
-        setCurrentDocId(response?.data?.data?.data[currentDoc || 0]?._id);
-        setMarkdownValue(response?.data?.data?.data[currentDoc || 0]?.content);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.log("Error getting docs", error);
-        }
-      }
-    };
+  //       setDocuments(response?.data?.data?.data);
+  //       setCurrentDocId(response?.data?.data?.data[currentDoc || 0]?._id);
+  //       setMarkdownValue(response?.data?.data?.data[currentDoc || 0]?.content);
+  //     } catch (error) {
+  //       if (axios.isAxiosError(error)) {
+  //         console.log("Error getting docs", error);
+  //       }
+  //     }
+  //   };
 
-    fetchDocuments();
-  }, [setDocuments, setCurrentDocId, currentDoc, setMarkdownValue]);
-
-  useEffect(() => {
-    // Check if the current document ID is stored in sessionStorage
-    console.log("useEffect triggered");
-
-    const storedDocIndex = parseInt(
-      sessionStorage.getItem("currentDoc") || "0",
-      10
-    );
-    console.log("stored index", storedDocIndex);
-    if (storedDocIndex) {
-      // If it exists, use it to set the current document ID
-      setCurrentDoc(storedDocIndex);
-    }
-  }, [setCurrentDoc]);
-
-  //  // Function to fetch documents from the server
-  //  const fetchDocuments = async () => {
-  //    try {
-  //      const docResponse = await axios.get(
-  //        "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-  //        { withCredentials: true }
-  //      );
-
-  //      const userDocs = docResponse?.data?.data?.data;
-
-  //      // Update state with user documents
-  //      setDocuments(userDocs);
-  //      setMarkdownValue(userDocs[0]?.content || "");
-  //      setCurrentDocId(userDocs[0]._id);
-
-  //      // Cache documents in localStorage
-  //    } catch (error) {
-  //      console.error("Failed to fetch documents", error);
-  //      setDocuments(docsData); // Fallback to default documents
-  //      setMarkdownValue(docsData[1]?.content || "");
-  //    }
-  //  };
+  //   fetchDocuments();
+  // }, [setDocuments, setCurrentDocId, currentDoc, setMarkdownValue]);
 
   return (
     <StyledMarkdownCon $isPreview={isPreview}>

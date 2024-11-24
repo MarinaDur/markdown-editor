@@ -6,6 +6,9 @@ import MarkdownCon from "./MarkdownCon";
 import { useMarkdown } from "../context/MarkdownContext";
 import transition from "../ui/Transition";
 import DeletePopup from "../ui/DeletePopup";
+import { fetchDocuments } from "../utils/apiCalls";
+import { useQuery } from "@tanstack/react-query";
+import { MarkDownDocs } from "../interfaces/documets";
 
 interface StyledMainProps {
   $isMenuOpen: boolean;
@@ -33,10 +36,19 @@ const StyledMain = styled.div<StyledMainProps>`
 
 function Main() {
   const { isMenuOpen } = useMarkdown();
+  const {
+    data: documents,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<MarkDownDocs[]>({
+    queryKey: ["documents"],
+    queryFn: fetchDocuments,
+  });
 
   return (
     <StyledMain $isMenuOpen={isMenuOpen}>
-      <Header />
+      <Header documents={documents} />
       <MarkdownCon />
     </StyledMain>
   );

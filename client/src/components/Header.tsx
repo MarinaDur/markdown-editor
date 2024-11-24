@@ -6,6 +6,11 @@ import DocTitle from "../ui/DocTitle";
 import DeleteSave from "../ui/DeleteSave";
 import { useMarkdown } from "../context/MarkdownContext";
 import Heading from "../ui/Heading";
+import { MarkDownDocs } from "../interfaces/documets";
+
+interface Documents {
+  documents?: MarkDownDocs[] | undefined;
+}
 
 const StyledHeaderCon = styled.header`
   background: var(--cl-bg-header);
@@ -64,15 +69,16 @@ const StyledTitle = styled(Heading)`
   }
 `;
 
-function Header() {
+function Header({ documents }: Documents) {
   const {
     isMenuOpen,
     handleToggleMenu,
     currentDoc,
-    documents,
+    // documents,
     handleChangeName,
     docNameValue,
     handleInputBlur,
+    // documents,
   } = useMarkdown();
 
   return (
@@ -81,7 +87,7 @@ function Header() {
       <StylesHeader>
         <StyledCon>
           <StyledTitle as="h2">MARKDOWN</StyledTitle>
-          {documents.map(
+          {documents?.map(
             (doc, index) =>
               currentDoc === index && (
                 <DocTitle

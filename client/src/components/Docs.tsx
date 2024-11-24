@@ -2,6 +2,15 @@ import { styled } from "styled-components";
 import flex from "../ui/Flex";
 import DocTitle from "../ui/DocTitle";
 import { useMarkdown } from "../context/MarkdownContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchDocuments } from "../utils/apiCalls";
+
+interface MarkDownDocs {
+  createdAt: string;
+  name: string;
+  content: string;
+  _id: string;
+}
 
 const StyledDocs = styled.div`
   ${flex}
@@ -10,15 +19,24 @@ const StyledDocs = styled.div`
 `;
 
 function Docs() {
-  const { documents, handleCurrentDoc } = useMarkdown();
+  // const { documents, handleCurrentDoc } = useMarkdown();
+  const {
+    data: documents,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<MarkDownDocs[]>({
+    queryKey: ["documents"],
+    queryFn: fetchDocuments,
+  });
 
   return (
     <StyledDocs>
-      {documents.map((doc, index) => (
+      {documents?.map((doc, index) => (
         <DocTitle
           doc={doc}
           key={doc.name}
-          handleClick={() => handleCurrentDoc(index, doc._id)}
+          // handleClick={() => handleCurrentDoc(index, doc._id)}
         />
       ))}
     </StyledDocs>
