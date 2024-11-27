@@ -42,7 +42,7 @@ interface MarkdownContextProps {
   handleChangeName: (e: ChangeEvent<HTMLInputElement>) => void;
   handleInputBlur: () => void;
   deleteDoc: () => void;
-  handleSaveMarkdown: () => void;
+  // handleSaveMarkdown: () => void;
   handleDeleteDocPopup: () => void;
   deleteDocPopup: boolean;
   handleCloseDeleteDocPopup: () => void;
@@ -249,54 +249,54 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     setIsDocDeleted(false);
   }, [currentDoc, documents.length, handleCurrentDoc, isDocDeleted, documents]);
 
-  async function handleSaveMarkdown() {
-    // setDocuments((prev) => {
-    //   const updatedDocs = [...prev];
-    //   updatedDocs[currentDoc ?? 0].content = markdownValue ?? "";
-    //   return updatedDocs;
-    // });
-    setIsLoading(true);
-    console.log("doc id:", currentDocId);
-    try {
-      const response = await axios.patch(
-        `http://127.0.0.1:8000/api/v1/documents/${currentDocId}`,
-        {
-          content: markdownValue,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(response);
-      if (
-        response?.data?.status === "success" &&
-        response?.data?.data?.user?._id
-      ) {
-        const docResponse = await axios.get(
-          "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-          {
-            withCredentials: true,
-          }
-        );
-        const userDocs = docResponse?.data?.data?.data;
+  // async function handleSaveMarkdown() {
+  //   // setDocuments((prev) => {
+  //   //   const updatedDocs = [...prev];
+  //   //   updatedDocs[currentDoc ?? 0].content = markdownValue ?? "";
+  //   //   return updatedDocs;
+  //   // });
+  //   setIsLoading(true);
+  //   console.log("doc id:", currentDocId);
+  //   try {
+  //     const response = await axios.patch(
+  //       `http://127.0.0.1:8000/api/v1/documents/${currentDocId}`,
+  //       {
+  //         content: markdownValue,
+  //       },
+  //       {
+  //         headers: { "Content-Type": "application/json" },
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     console.log(response);
+  //     if (
+  //       response?.data?.status === "success" &&
+  //       response?.data?.data?.user?._id
+  //     ) {
+  //       const docResponse = await axios.get(
+  //         "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       const userDocs = docResponse?.data?.data?.data;
 
-        setDocuments(userDocs);
-        setMarkdownValue(userDocs[currentDoc || 0]?.content || "");
-        setIsLoggedIn(true);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        handleError(error.response?.data?.message);
-        console.log(error.response);
-      } else {
-        handleError("An unexpected error occurred");
-        console.error("An unexpected error occurred:", error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  //       setDocuments(userDocs);
+  //       setMarkdownValue(userDocs[currentDoc || 0]?.content || "");
+  //       setIsLoggedIn(true);
+  //     }
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       handleError(error.response?.data?.message);
+  //       console.log(error.response);
+  //     } else {
+  //       handleError("An unexpected error occurred");
+  //       console.error("An unexpected error occurred:", error);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
   // async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
   //   e.preventDefault();
@@ -441,7 +441,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     handleChangeName,
     handleInputBlur,
     deleteDoc,
-    handleSaveMarkdown,
+    // handleSaveMarkdown,
     handleDeleteDocPopup,
     deleteDocPopup,
     handleCloseDeleteDocPopup,

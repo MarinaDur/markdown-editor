@@ -1,16 +1,13 @@
 import { styled } from "styled-components";
 import MarkdownHeader from "../ui/MarkdownHeader";
-import Paragraph from "../ui/Paragraph";
 import width from "../ui/Width";
 import flex from "../ui/Flex";
 import textGeneral from "../ui/TextGeneral";
 import { useMarkdown } from "../context/MarkdownContext";
-import padding from "../ui/Padding";
 import paddingPM from "../ui/PaddingPM";
 import TextareaAutosize from "react-textarea-autosize";
 import { MarkDownDocs } from "../interfaces/documets";
-import { useQuery } from "@tanstack/react-query";
-import { fetchOneDocuments } from "../utils/apiCalls";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface StyledEditorProps {
   $isPreview: boolean;
@@ -68,24 +65,21 @@ const StyledDiv = styled.div`
 `;
 
 function Editor({ document }: { document: MarkDownDocs }) {
-  const {
-    markdownValue,
-    handleEditor,
-    isPreview,
-    handleSaveMarkdown,
-    currentDocId,
-  } = useMarkdown();
-  // const {
-  //   data: document,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["document"],
-  //   queryFn: () => fetchOneDocuments(currentDocId ?? ""),
-  // });
+  const { markdownValue, handleEditor, isPreview, currentDocId } =
+    useMarkdown();
 
-  // console.log(document);
+  const queryClient = useQueryClient();
+  function handleInputChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const newValue = e.target.value;
+
+    queryClient.setQueryData(
+      ["documents"],
+      (oldData: MarkDownDocs[] | undefined) =>
+        oldData?.map((doc) =>
+          doc._id === document._id ? { ...doc, content: newValue } : doc
+        )
+    );
+  }
 
   return (
     <StyledEditor $isPreview={isPreview} className="editor">
@@ -93,8 +87,8 @@ function Editor({ document }: { document: MarkDownDocs }) {
       <StyledMarkdownCon>
         <StyledTextArea
           placeholder="Type your markdown here..."
-          value={markdownValue}
-          onChange={handleEditor}
+          value={document.content || ""}
+          onChange={handleInputChange}
           // onBlur={handleSaveMarkdown}
         />
         {/* <StyledDiv></StyledDiv> */}
