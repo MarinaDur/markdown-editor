@@ -1,4 +1,6 @@
 import { styled, css } from "styled-components";
+import { Document, MarkDownDocs } from "../interfaces/documets";
+
 import { useLocation } from "react-router-dom";
 import Preview from "./Preview";
 import flex from "../ui/Flex";
@@ -57,45 +59,14 @@ const StyledPlaceHNoDoc = styled.div`
   padding-top: 5rem;
 `;
 
-function MarkdownCon() {
-  const {
-    isPreview,
-    documents,
-    handleLogout,
-    setDocuments,
-    setCurrentDocId,
-    currentDoc,
-    setMarkdownValue,
-    setCurrentDoc,
-  } = useMarkdown();
-
-  // useEffect(() => {
-  //   const fetchDocuments = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-
-  //         { withCredentials: true }
-  //       );
-
-  //       setDocuments(response?.data?.data?.data);
-  //       setCurrentDocId(response?.data?.data?.data[currentDoc || 0]?._id);
-  //       setMarkdownValue(response?.data?.data?.data[currentDoc || 0]?.content);
-  //     } catch (error) {
-  //       if (axios.isAxiosError(error)) {
-  //         console.log("Error getting docs", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchDocuments();
-  // }, [setDocuments, setCurrentDocId, currentDoc, setMarkdownValue]);
+function MarkdownCon({ documents }: Document) {
+  const { isPreview, currentDoc } = useMarkdown();
 
   return (
     <StyledMarkdownCon $isPreview={isPreview}>
-      {documents.length > 0 ? (
+      {documents && documents.length > 0 ? (
         <>
-          <Editor />
+          <Editor document={documents[currentDoc || 0]} />
           <Preview />
         </>
       ) : (

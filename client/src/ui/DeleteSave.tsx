@@ -3,6 +3,14 @@ import flex from "./Flex";
 import Svg from "./Svg";
 import { useMarkdown } from "../context/MarkdownContext";
 import width from "./Width";
+import {
+  Document,
+  MarkDownDocs,
+  UpdateDocumentResponse,
+  UpdateDocumentVariables,
+} from "../interfaces/documets";
+import { updateDocument } from "../utils/apiCalls";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const StyledDeleteSave = styled.div`
   ${flex}
@@ -45,8 +53,37 @@ const StyledSaveBtnText = styled.span`
   cursor: pointer;
 `;
 
-function DeleteSave() {
-  const { handleDeleteDocPopup, handleSaveMarkdown } = useMarkdown();
+function DeleteSave({ documents }: Document) {
+  const { handleDeleteDocPopup, currentDoc, markdownValue, docNameValue } =
+    useMarkdown();
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: updateDocument,
+    onSuccess: (data: any) => {
+      queryClient.setQueryData<MarkDownDocs[] | undefined>(
+        ["documents"],
+        (oldData) =>
+          oldData?.map((doc) =>
+            doc._id === data._id ? { ...doc, ...data } : doc
+          )
+      );
+    },
+  });
+
+  function handleSaveMarkdown() {
+    if (documents && currentDoc !== undefined) {
+      mutation.mutate({
+        id: documents[currentDoc]._id,
+        name: docNameValue ?? "Untitled",
+        content: markdownValue ?? "",
+      });
+    } else {
+      console.error("Documents or current document is undefined.");
+    }
+  }
+
   return (
     <StyledDeleteSave>
       <Svg

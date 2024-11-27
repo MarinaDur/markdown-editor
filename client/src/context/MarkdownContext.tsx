@@ -67,6 +67,7 @@ interface MarkdownContextProps {
   setCurrentDoc: React.Dispatch<React.SetStateAction<number | undefined>>;
   setCurrentDocId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setMarkdownValue: React.Dispatch<React.SetStateAction<string>>;
+  currentDocId: string | undefined;
 }
 
 export interface MarkDownDocs {
@@ -91,7 +92,9 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   const [markdownValue, setMarkdownValue] = useState<string>(
     documents[1]?.content
   );
-  const [currentDoc, setCurrentDoc] = useState<number | undefined>(1);
+  const [currentDoc, setCurrentDoc] = useState<number | undefined>(
+    () => Number(localStorage.getItem("currentDoc")) || 0
+  );
   const [currentDocId, setCurrentDocId] = useState<string | undefined>(
     documents[currentDoc || 1]?._id
   );
@@ -132,7 +135,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
       console.log("docId", documents[docIndex]?._id);
       sessionStorage.setItem("currentDoc", `${docIndex}`);
       setCurrentDoc(docIndex);
-      setCurrentDocId(documents[docIndex]?._id);
+      // setCurrentDocId(docId);
       setMarkdownValue(documents[docIndex]?.content);
       setIsMenuOpen(false);
       setDocNamevalue(documents[docIndex]?.name);
@@ -460,6 +463,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     setCurrentDocId,
     setMarkdownValue,
     setCurrentDoc,
+    currentDocId,
   };
 
   return (

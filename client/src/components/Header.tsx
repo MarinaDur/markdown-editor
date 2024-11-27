@@ -6,11 +6,11 @@ import DocTitle from "../ui/DocTitle";
 import DeleteSave from "../ui/DeleteSave";
 import { useMarkdown } from "../context/MarkdownContext";
 import Heading from "../ui/Heading";
-import { MarkDownDocs } from "../interfaces/documets";
+import { Document } from "../interfaces/documets";
 
-interface Documents {
-  documents?: MarkDownDocs[] | undefined;
-}
+// interface Documents {
+//   documents?: MarkDownDocs[] | undefined;
+// }
 
 const StyledHeaderCon = styled.header`
   background: var(--cl-bg-header);
@@ -69,7 +69,7 @@ const StyledTitle = styled(Heading)`
   }
 `;
 
-function Header({ documents }: Documents) {
+function Header({ documents }: Document) {
   const {
     isMenuOpen,
     handleToggleMenu,
@@ -91,17 +91,17 @@ function Header({ documents }: Documents) {
             (doc, index) =>
               currentDoc === index && (
                 <DocTitle
-                  key={doc.name}
+                  key={doc._id}
                   doc={doc}
                   placement="header"
                   handleChange={handleChangeName}
-                  value={docNameValue}
+                  value={doc.name}
                   handleBlur={handleInputBlur}
                 />
               )
           )}
         </StyledCon>
-        <DeleteSave />
+        <DeleteSave documents={documents} />
       </StylesHeader>
     </StyledHeaderCon>
   );

@@ -49,7 +49,7 @@ function Main() {
   return (
     <StyledMain $isMenuOpen={isMenuOpen}>
       <Header documents={documents} />
-      <MarkdownCon />
+      <MarkdownCon documents={documents} />
     </StyledMain>
   );
 }

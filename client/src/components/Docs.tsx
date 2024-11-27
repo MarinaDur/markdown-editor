@@ -4,6 +4,7 @@ import DocTitle from "../ui/DocTitle";
 import { useMarkdown } from "../context/MarkdownContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchDocuments } from "../utils/apiCalls";
+import { useEffect } from "react";
 
 interface MarkDownDocs {
   createdAt: string;
@@ -19,7 +20,7 @@ const StyledDocs = styled.div`
 `;
 
 function Docs() {
-  // const { documents, handleCurrentDoc } = useMarkdown();
+  const { handleCurrentDoc, currentDoc } = useMarkdown();
   const {
     data: documents,
     isLoading,
@@ -30,13 +31,17 @@ function Docs() {
     queryFn: fetchDocuments,
   });
 
+  useEffect(() => {
+    localStorage.setItem("currentDoc", (currentDoc ?? 0).toString());
+  }, [currentDoc]);
+
   return (
     <StyledDocs>
       {documents?.map((doc, index) => (
         <DocTitle
           doc={doc}
           key={doc.name}
-          // handleClick={() => handleCurrentDoc(index, doc._id)}
+          handleClick={() => handleCurrentDoc(index, doc._id)}
         />
       ))}
     </StyledDocs>

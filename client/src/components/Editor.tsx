@@ -8,6 +8,9 @@ import { useMarkdown } from "../context/MarkdownContext";
 import padding from "../ui/Padding";
 import paddingPM from "../ui/PaddingPM";
 import TextareaAutosize from "react-textarea-autosize";
+import { MarkDownDocs } from "../interfaces/documets";
+import { useQuery } from "@tanstack/react-query";
+import { fetchOneDocuments } from "../utils/apiCalls";
 
 interface StyledEditorProps {
   $isPreview: boolean;
@@ -64,9 +67,26 @@ const StyledDiv = styled.div`
   /* height: 100vh; */
 `;
 
-function Editor({}) {
-  const { markdownValue, handleEditor, isPreview, handleSaveMarkdown } =
-    useMarkdown();
+function Editor({ document }: { document: MarkDownDocs }) {
+  const {
+    markdownValue,
+    handleEditor,
+    isPreview,
+    handleSaveMarkdown,
+    currentDocId,
+  } = useMarkdown();
+  // const {
+  //   data: document,
+  //   isLoading,
+  //   isError,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["document"],
+  //   queryFn: () => fetchOneDocuments(currentDocId ?? ""),
+  // });
+
+  // console.log(document);
+
   return (
     <StyledEditor $isPreview={isPreview} className="editor">
       <MarkdownHeader title="MARKDOWN" type="markdown" />
