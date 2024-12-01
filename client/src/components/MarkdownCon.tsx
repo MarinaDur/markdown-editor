@@ -66,7 +66,7 @@ function MarkdownCon({ documents }: Document) {
     <StyledMarkdownCon $isPreview={isPreview}>
       {documents && documents.length > 0 ? (
         <>
-          <Editor document={documents[currentDoc || 0]} />
+          <Editor />
           <Preview />
         </>
       ) : (

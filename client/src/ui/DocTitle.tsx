@@ -91,7 +91,7 @@ function DocTitle({
           <StyledInput
             value={value}
             onChange={handleChange}
-            onBlur={handleBlur}
+            // onBlur={handleBlur}
           />
         ) : (
           <Paragraph $type="all">{doc?.name}</Paragraph>

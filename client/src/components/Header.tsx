@@ -101,7 +101,9 @@ function Header({ documents }: Document) {
               )
           )}
         </StyledCon>
-        <DeleteSave documents={documents} />
+        {documents && documents.length > 0 && (
+          <DeleteSave document={documents[currentDoc || 0]} />
+        )}
       </StylesHeader>
     </StyledHeaderCon>
   );

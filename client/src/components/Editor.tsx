@@ -64,22 +64,9 @@ const StyledDiv = styled.div`
   /* height: 100vh; */
 `;
 
-function Editor({ document }: { document: MarkDownDocs }) {
+function Editor() {
   const { markdownValue, handleEditor, isPreview, currentDocId } =
     useMarkdown();
-
-  const queryClient = useQueryClient();
-  function handleInputChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    const newValue = e.target.value;
-
-    queryClient.setQueryData(
-      ["documents"],
-      (oldData: MarkDownDocs[] | undefined) =>
-        oldData?.map((doc) =>
-          doc._id === document._id ? { ...doc, content: newValue } : doc
-        )
-    );
-  }
 
   return (
     <StyledEditor $isPreview={isPreview} className="editor">
@@ -87,8 +74,8 @@ function Editor({ document }: { document: MarkDownDocs }) {
       <StyledMarkdownCon>
         <StyledTextArea
           placeholder="Type your markdown here..."
-          value={document.content || ""}
-          onChange={handleInputChange}
+          value={markdownValue}
+          onChange={handleEditor}
           // onBlur={handleSaveMarkdown}
         />
         {/* <StyledDiv></StyledDiv> */}

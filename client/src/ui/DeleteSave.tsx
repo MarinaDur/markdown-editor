@@ -53,7 +53,7 @@ const StyledSaveBtnText = styled.span`
   cursor: pointer;
 `;
 
-function DeleteSave({ documents }: Document) {
+function DeleteSave({ document }: { document: MarkDownDocs }) {
   const { handleDeleteDocPopup, currentDoc, markdownValue, docNameValue } =
     useMarkdown();
 
@@ -73,9 +73,10 @@ function DeleteSave({ documents }: Document) {
   });
 
   function handleSaveMarkdown() {
-    if (documents && currentDoc !== undefined) {
+    console.log("mutatae doc", document, markdownValue, docNameValue);
+    if (document !== undefined) {
       mutation.mutate({
-        id: documents[currentDoc]._id,
+        id: document._id,
         name: docNameValue ?? "Untitled",
         content: markdownValue ?? "",
       });

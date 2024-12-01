@@ -35,7 +35,7 @@ const StyledMain = styled.div<StyledMainProps>`
 `;
 
 function Main() {
-  const { isMenuOpen } = useMarkdown();
+  const { isMenuOpen, setMarkdownValue, currentDoc } = useMarkdown();
   const {
     data: documents,
     isLoading,
@@ -45,6 +45,12 @@ function Main() {
     queryKey: ["documents"],
     queryFn: fetchDocuments,
   });
+
+  useEffect(() => {
+    if (documents && currentDoc !== undefined) {
+      setMarkdownValue(documents[currentDoc].content); // Sync state with fetched data
+    }
+  }, [documents, currentDoc, setMarkdownValue]);
 
   return (
     <StyledMain $isMenuOpen={isMenuOpen}>
