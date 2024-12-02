@@ -77,7 +77,7 @@ function Header({ documents }: Document) {
     // documents,
     handleChangeName,
     docNameValue,
-    handleInputBlur,
+    // handleInputBlur,
     // documents,
   } = useMarkdown();
 
@@ -95,8 +95,8 @@ function Header({ documents }: Document) {
                   doc={doc}
                   placement="header"
                   handleChange={handleChangeName}
-                  value={doc.name}
-                  handleBlur={handleInputBlur}
+                  value={docNameValue}
+                  // handleBlur={handleInputBlur}
                 />
               )
           )}

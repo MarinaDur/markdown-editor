@@ -9,6 +9,7 @@ import DeletePopup from "../ui/DeletePopup";
 import { fetchDocuments } from "../utils/apiCalls";
 import { useQuery } from "@tanstack/react-query";
 import { MarkDownDocs } from "../interfaces/documets";
+import Loader from "../ui/Loader";
 
 interface StyledMainProps {
   $isMenuOpen: boolean;
@@ -35,7 +36,8 @@ const StyledMain = styled.div<StyledMainProps>`
 `;
 
 function Main() {
-  const { isMenuOpen, setMarkdownValue, currentDoc } = useMarkdown();
+  const { isMenuOpen, setMarkdownValue, currentDoc, setDocNamevalue } =
+    useMarkdown();
   const {
     data: documents,
     isLoading,
@@ -48,14 +50,15 @@ function Main() {
 
   useEffect(() => {
     if (documents && currentDoc !== undefined) {
-      setMarkdownValue(documents[currentDoc].content); // Sync state with fetched data
+      setMarkdownValue(documents[currentDoc].content);
+      setDocNamevalue(documents[currentDoc].name);
     }
-  }, [documents, currentDoc, setMarkdownValue]);
+  }, [documents, currentDoc, setMarkdownValue, setDocNamevalue]);
 
   return (
     <StyledMain $isMenuOpen={isMenuOpen}>
       <Header documents={documents} />
-      <MarkdownCon documents={documents} />
+      <MarkdownCon documents={documents || []} isLoading={isLoading} />
     </StyledMain>
   );
 }

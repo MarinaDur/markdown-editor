@@ -44,14 +44,15 @@ const StyledTile = styled(Heading)`
 `;
 
 function SideMenu() {
-  const { isMenuOpen, handleAddNewDoc } = useMarkdown();
+  // const { isMenuOpen, handleAddNewDoc } = useMarkdown();
+  const { isMenuOpen } = useMarkdown();
 
   return (
     <StyledSideMenuCon $isMenuOpen={isMenuOpen}>
       <StyledSideMenu>
         <StyledTile as="h2">MARKDOWN</StyledTile>
         <Heading as="h3">MY DOCUMENT</Heading>
-        <Button handleClick={handleAddNewDoc} text="+ New Document" />
+        <Button text="+ New Document" />
         <Docs />
         <ColorTheme />
       </StyledSideMenu>

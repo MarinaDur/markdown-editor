@@ -11,9 +11,15 @@ import Paragraph from "../ui/Paragraph";
 import Heading from "../ui/Heading";
 import { useEffect } from "react";
 import axios from "axios";
+import Loader from "../ui/Loader";
 
 interface StyledMarkdownConProps {
   $isPreview: boolean;
+}
+
+interface MarkDownConProps {
+  documents: MarkDownDocs[];
+  isLoading: boolean;
 }
 
 const StyledMarkdownCon = styled.div<StyledMarkdownConProps>`
@@ -59,11 +65,12 @@ const StyledPlaceHNoDoc = styled.div`
   padding-top: 5rem;
 `;
 
-function MarkdownCon({ documents }: Document) {
+function MarkdownCon({ documents, isLoading }: MarkDownConProps) {
   const { isPreview, currentDoc } = useMarkdown();
 
   return (
     <StyledMarkdownCon $isPreview={isPreview}>
+      {isLoading && <h1>LOADING!!!!!!!!</h1>}
       {documents && documents.length > 0 ? (
         <>
           <Editor />

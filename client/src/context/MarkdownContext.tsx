@@ -34,14 +34,18 @@ interface MarkdownContextProps {
   handleEditor: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   isPreview: boolean;
   handleShowPreview: () => void;
-  documents: MarkDownDocs[];
-  handleCurrentDoc: (docIndex: number, docId: string) => void;
+  // documents: MarkDownDocs[];
+  handleCurrentDoc: (
+    docIndex: number,
+    docId: string,
+    documents: MarkDownDocs[]
+  ) => void;
   currentDoc: number | undefined;
-  handleAddNewDoc: () => void;
+  // handleAddNewDoc: () => void;
   docNameValue: string | undefined;
   handleChangeName: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleInputBlur: () => void;
-  deleteDoc: () => void;
+  // handleInputBlur: () => void;
+  // deleteDoc: () => void;
   // handleSaveMarkdown: () => void;
   handleDeleteDocPopup: () => void;
   deleteDocPopup: boolean;
@@ -61,9 +65,10 @@ interface MarkdownContextProps {
   error: string | null;
   handleError: (err: string | null) => void;
   handleErrorReset: () => void;
+  setDocNamevalue: (docName: string) => void;
   isLoading: boolean;
-  handleLogout: () => void;
-  setDocuments: React.Dispatch<React.SetStateAction<MarkDownDocs[]>>;
+  // handleLogout: () => void;
+  // setDocuments: React.Dispatch<React.SetStateAction<MarkDownDocs[]>>;
   setCurrentDoc: React.Dispatch<React.SetStateAction<number | undefined>>;
   setCurrentDocId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setMarkdownValue: React.Dispatch<React.SetStateAction<string>>;
@@ -88,19 +93,13 @@ const MarkdownContext = createContext<MarkdownContextProps | undefined>(
 function MarkdownProvider({ children }: MarkdownProviderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isPreview, setIsPreview] = useState<boolean>(false);
-  const [documents, setDocuments] = useState<MarkDownDocs[]>(docsData);
-  const [markdownValue, setMarkdownValue] = useState<string>(
-    documents[1]?.content
-  );
+  // const [documents, setDocuments] = useState<MarkDownDocs[]>(docsData);
+  const [markdownValue, setMarkdownValue] = useState<string>("");
   const [currentDoc, setCurrentDoc] = useState<number | undefined>(
     () => Number(localStorage.getItem("currentDoc")) || 0
   );
-  const [currentDocId, setCurrentDocId] = useState<string | undefined>(
-    documents[currentDoc || 1]?._id
-  );
-  const [docNameValue, setDocNamevalue] = useState<string | undefined>(
-    documents[1]?.name
-  );
+  const [currentDocId, setCurrentDocId] = useState<string | undefined>("");
+  const [docNameValue, setDocNamevalue] = useState<string | undefined>("");
   const [isNewDocumentAdded, setNewDocumentAdded] = useState<boolean>(false);
   const [isDocDeleted, setIsDocDeleted] = useState<boolean>(false);
   const [deleteDocPopup, setDeleteDocPopup] = useState<boolean>(false);
@@ -130,59 +129,59 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   }
 
   const handleCurrentDoc = useCallback(
-    (docIndex: number, docId: string) => {
+    (docIndex: number, docId: string, documents: MarkDownDocs[]) => {
       console.log("doc Index", docIndex);
       console.log("docId", documents[docIndex]?._id);
       sessionStorage.setItem("currentDoc", `${docIndex}`);
       setCurrentDoc(docIndex);
-      // setCurrentDocId(docId);
+      setCurrentDocId(docId);
       setMarkdownValue(documents[docIndex]?.content);
       setIsMenuOpen(false);
       setDocNamevalue(documents[docIndex]?.name);
     },
-    [documents]
+    []
   );
 
-  function handleAddNewDoc() {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const formattedDate = `${month}-${day}-${year}`;
+  // function handleAddNewDoc() {
+  //   const currentDate = new Date();
+  //   const year = currentDate.getFullYear();
+  //   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  //   const day = String(currentDate.getDate()).padStart(2, "0");
+  //   const formattedDate = `${month}-${day}-${year}`;
 
-    setDocuments((prev) => {
-      const numbers = prev.map((doc) => {
-        const match = doc.name.match(/untitled-document-(\d+)\.md/);
-        return match ? parseInt(match[1]) : 0;
-      });
+  //   setDocuments((prev) => {
+  //     const numbers = prev.map((doc) => {
+  //       const match = doc.name.match(/untitled-document-(\d+)\.md/);
+  //       return match ? parseInt(match[1]) : 0;
+  //     });
 
-      // Finding the maximum number
-      const maxNumber = Math.max(...numbers);
+  //     // Finding the maximum number
+  //     const maxNumber = Math.max(...numbers);
 
-      // Incrementing the number for the new document
-      const newDocNumber = maxNumber + 1;
-      const newDocs = [
-        {
-          createdAt: formattedDate,
-          name: `untitled-document-${newDocNumber}.md`,
-          content: "",
-          _id: `12345${newDocNumber}`,
-        },
-        ...prev,
-      ];
+  //     // Incrementing the number for the new document
+  //     const newDocNumber = maxNumber + 1;
+  //     const newDocs = [
+  //       {
+  //         createdAt: formattedDate,
+  //         name: `untitled-document-${newDocNumber}.md`,
+  //         content: "",
+  //         _id: `12345${newDocNumber}`,
+  //       },
+  //       ...prev,
+  //     ];
 
-      // Perform the subsequent action after the state update
-      setNewDocumentAdded(true);
-      return newDocs;
-    });
-  }
+  //     // Perform the subsequent action after the state update
+  //     setNewDocumentAdded(true);
+  //     return newDocs;
+  //   });
+  // }
 
-  useEffect(() => {
-    if (isNewDocumentAdded) {
-      handleCurrentDoc(0, documents[0]._id);
-      setNewDocumentAdded(false);
-    }
-  }, [isNewDocumentAdded, handleCurrentDoc, documents]);
+  // useEffect(() => {
+  //   if (isNewDocumentAdded) {
+  //     handleCurrentDoc(0, documents[0]._id);
+  //     setNewDocumentAdded(false);
+  //   }
+  // }, [isNewDocumentAdded, handleCurrentDoc, documents]);
 
   function handleChangeName(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -202,52 +201,52 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     setPasswordConfirm(e.target.value);
   }
 
-  function handleInputBlur() {
-    setDocuments((prev) => {
-      const updatedDocs = [...prev];
-      updatedDocs[currentDoc ?? 0].name = docNameValue ?? "";
-      return updatedDocs;
-    });
-  }
+  // function handleInputBlur() {
+  //   setDocuments((prev) => {
+  //     const updatedDocs = [...prev];
+  //     updatedDocs[currentDoc ?? 0].name = docNameValue ?? "";
+  //     return updatedDocs;
+  //   });
+  // }
 
   function handleDeleteDocPopup() {
-    if (documents.length > 0) {
-      setDeleteDocPopup(true);
-    } else return;
+    // if (documents.length > 0) {
+    //   setDeleteDocPopup(true);
+    // } else return;
   }
 
   function handleCloseDeleteDocPopup() {
     setDeleteDocPopup(false);
   }
 
-  function deleteDoc() {
-    setIsDocDeleted(true);
+  // function deleteDoc() {
+  //   setIsDocDeleted(true);
 
-    setDocuments((prev) => {
-      const updatedDocs = [...prev];
-      const updatedCurrentDoc = currentDoc ?? 0;
-      updatedDocs.splice(updatedCurrentDoc, 1);
+  //   setDocuments((prev) => {
+  //     const updatedDocs = [...prev];
+  //     const updatedCurrentDoc = currentDoc ?? 0;
+  //     updatedDocs.splice(updatedCurrentDoc, 1);
 
-      return updatedDocs;
-    });
-    setDeleteDocPopup(false);
-  }
+  //     return updatedDocs;
+  //   });
+  //   setDeleteDocPopup(false);
+  // }
 
-  useEffect(() => {
-    if (isDocDeleted) {
-      const updatedCurrentDoc = currentDoc ?? 0;
+  // useEffect(() => {
+  //   if (isDocDeleted) {
+  //     const updatedCurrentDoc = currentDoc ?? 0;
 
-      const newCurrentDoc = updatedCurrentDoc > 0 ? updatedCurrentDoc - 1 : 0;
+  //     const newCurrentDoc = updatedCurrentDoc > 0 ? updatedCurrentDoc - 1 : 0;
 
-      if (documents.length > 0) {
-        handleCurrentDoc(newCurrentDoc, documents[newCurrentDoc]?._id);
-      } else {
-        setMarkdownValue("");
-        setDocNamevalue("");
-      }
-    }
-    setIsDocDeleted(false);
-  }, [currentDoc, documents.length, handleCurrentDoc, isDocDeleted, documents]);
+  //     if (documents.length > 0) {
+  //       handleCurrentDoc(newCurrentDoc, documents[newCurrentDoc]?._id);
+  //     } else {
+  //       setMarkdownValue("");
+  //       setDocNamevalue("");
+  //     }
+  //   }
+  //   setIsDocDeleted(false);
+  // }, [currentDoc, documents.length, handleCurrentDoc, isDocDeleted, documents]);
 
   // async function handleSaveMarkdown() {
   //   // setDocuments((prev) => {
@@ -391,15 +390,15 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     }
   }
 
-  const handleLogout = () => {
-    console.log("logged out");
-    setIsLoggedIn(false);
-    setDocuments([]);
-    setMarkdownValue("");
-    // Redirect to login page
-  };
+  // const handleLogout = () => {
+  //   console.log("logged out");
+  //   setIsLoggedIn(false);
+  //   setDocuments([]);
+  //   setMarkdownValue("");
+  //   // Redirect to login page
+  // };
 
-  console.log(documents);
+  // console.log(documents);
 
   function handleErrorReset() {
     if (error !== null) {
@@ -433,14 +432,14 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     handleEditor,
     isPreview,
     handleShowPreview,
-    documents,
+    // documents,
     handleCurrentDoc,
     currentDoc,
-    handleAddNewDoc,
+    // handleAddNewDoc,
     docNameValue,
     handleChangeName,
-    handleInputBlur,
-    deleteDoc,
+    // handleInputBlur,
+    // deleteDoc,
     // handleSaveMarkdown,
     handleDeleteDocPopup,
     deleteDocPopup,
@@ -458,12 +457,13 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     handleError,
     handleErrorReset,
     isLoading,
-    handleLogout,
-    setDocuments,
+    // handleLogout,
+    // setDocuments,
     setCurrentDocId,
     setMarkdownValue,
     setCurrentDoc,
     currentDocId,
+    setDocNamevalue,
   };
 
   return (

@@ -28,7 +28,7 @@ function Login() {
     handleEmail,
     handlePassword,
     handleLogin,
-    handleLogout,
+    // handleLogout,
   } = useMarkdown();
 
   const location = useLocation();

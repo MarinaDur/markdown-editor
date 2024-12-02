@@ -41,7 +41,7 @@ function Docs() {
         <DocTitle
           doc={doc}
           key={doc.name}
-          handleClick={() => handleCurrentDoc(index, doc._id)}
+          handleClick={() => handleCurrentDoc(index, doc._id, documents)}
         />
       ))}
     </StyledDocs>

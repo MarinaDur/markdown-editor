@@ -53,10 +53,10 @@ const StyledPopup = styled.div<StyledPopupProps>`
 
 function DeletePopup() {
   const {
-    deleteDoc,
+    // deleteDoc,
     deleteDocPopup,
     handleCloseDeleteDocPopup,
-    documents,
+    // documents,
     currentDoc,
   } = useMarkdown();
   return (
@@ -70,11 +70,12 @@ function DeletePopup() {
         </Heading>
         <Paragraph $type="preview">
           {`Are you sure you want to delete the '${
-            documents[currentDoc ? currentDoc : 1]?.name
+            "template" // documents[currentDoc ? currentDoc : 1]?.name
           }' document and its
           contents? This action cannot be reversed.`}
         </Paragraph>
-        <Button text="Confirm & Delete" handleClick={deleteDoc} />
+        <Button text="Confirm & Delete" />
+        {/* <Button text="Confirm & Delete" handleClick={deleteDoc} /> */}
       </StyledPopup>
     </StyledDeletePopup>
   );
