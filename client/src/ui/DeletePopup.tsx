@@ -4,36 +4,9 @@ import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import Button from "./Button";
 import { useMarkdown } from "../context/MarkdownContext";
+import SlidingScreen from "./SlidingScreen";
 
-interface StyledPopupProps {
-  $isOpen: boolean;
-}
-
-const slideIn = keyframes`
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const StyledDeletePopup = styled.div<StyledPopupProps>`
-  background: var(--cl-overlay-delete);
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
-  position: absolute;
-  top: ${({ $isOpen }) => ($isOpen ? "0" : "-100%")};
-
-  left: 0;
-  z-index: 10000;
-  /* ${flex} */
-  transition: top 2s ease;
-  animation: ${({ $isOpen }) => ($isOpen ? slideIn : "none")} 2s forwards;
-`;
-
-const StyledPopup = styled.div<StyledPopupProps>`
+const StyledPopup = styled.div`
   width: 90%;
   background: var(--cl-bg-main);
   border-radius: 4px;
@@ -42,8 +15,6 @@ const StyledPopup = styled.div<StyledPopupProps>`
   gap: 1.6rem;
   flex-direction: column;
   align-items: flex-start;
-  /* animation: ${({ $isOpen }) =>
-    $isOpen ? slideIn : "none"} 0.8s forwards; */
   position: absolute;
   top: 50vh;
   left: 50%;
@@ -60,11 +31,11 @@ function DeletePopup() {
     currentDoc,
   } = useMarkdown();
   return (
-    <StyledDeletePopup
-      $isOpen={deleteDocPopup}
-      onClick={handleCloseDeleteDocPopup}
+    <SlidingScreen
+      isOpen={deleteDocPopup}
+      handleClosePopUp={handleCloseDeleteDocPopup}
     >
-      <StyledPopup $isOpen={deleteDocPopup}>
+      <StyledPopup>
         <Heading as="h4" $type="preview">
           Delete this document?
         </Heading>
@@ -77,7 +48,7 @@ function DeletePopup() {
         <Button text="Confirm & Delete" />
         {/* <Button text="Confirm & Delete" handleClick={deleteDoc} /> */}
       </StyledPopup>
-    </StyledDeletePopup>
+    </SlidingScreen>
   );
 }
 

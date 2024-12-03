@@ -20,7 +20,7 @@ function MainCon() {
     <StyledMainCon>
       <SideMenu />
       <Main />
-      {/* <DeletePopup /> */}
+      <DeletePopup />
     </StyledMainCon>
   );
 }

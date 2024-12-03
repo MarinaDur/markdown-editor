@@ -210,9 +210,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   // }
 
   function handleDeleteDocPopup() {
-    // if (documents.length > 0) {
-    //   setDeleteDocPopup(true);
-    // } else return;
+    setDeleteDocPopup(true);
   }
 
   function handleCloseDeleteDocPopup() {

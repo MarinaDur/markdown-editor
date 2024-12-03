@@ -12,6 +12,7 @@ import Heading from "../ui/Heading";
 import { useEffect } from "react";
 import axios from "axios";
 import Loader from "../ui/Loader";
+import SlidingScreen from "../ui/SlidingScreen";
 
 interface StyledMarkdownConProps {
   $isPreview: boolean;
@@ -70,7 +71,11 @@ function MarkdownCon({ documents, isLoading }: MarkDownConProps) {
 
   return (
     <StyledMarkdownCon $isPreview={isPreview}>
-      {isLoading && <h1>LOADING!!!!!!!!</h1>}
+      {isLoading && (
+        <SlidingScreen isOpen={isLoading}>
+          <Loader />
+        </SlidingScreen>
+      )}
       {documents && documents.length > 0 ? (
         <>
           <Editor />

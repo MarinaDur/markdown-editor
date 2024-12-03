@@ -11,6 +11,11 @@ import {
 } from "../interfaces/documets";
 import { updateDocument } from "../utils/apiCalls";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Loader from "./Loader";
+
+interface StylesSaveConProps {
+  $isLoading: boolean;
+}
 
 const StyledDeleteSave = styled.div`
   ${flex}
@@ -20,22 +25,26 @@ const StyledDeleteSave = styled.div`
   width: 52.5%;
 `;
 
-const StyledSaveCon = styled.div`
-  background: var(--cl-orange) url("icon-save.svg") no-repeat center;
+const StyledSaveCon = styled.div<StylesSaveConProps>`
+  background: ${(props) =>
+    props.$isLoading
+      ? 'url("spinner.gif") center/cover no-repeat'
+      : 'var(--cl-orange) url("icon-save.svg") no-repeat center'};
   border-radius: 4px;
   min-width: 4rem;
   /* aspect-ratio: 1; */
   height: 4rem;
   cursor: pointer;
-  transition: all 0.5s ease-in-out;
 
   &:hover {
     background-color: var(--cl-orange-hover);
+    transition: background-color 0.5s ease-in-out;
   }
 
   @media (min-width: 768px) {
     padding: 1rem 1.5rem 1.2rem 3.2rem;
     background-position: 1rem;
+    min-width: 139.43px;
   }
 
   @media (max-width: 767px) {
@@ -96,8 +105,15 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
         curser="pointer"
         hoverFill="hsla(13, 75%, 58%, 1)"
       />
-      <StyledSaveCon onClick={handleSaveMarkdown}>
-        <StyledSaveBtnText>Save changes</StyledSaveBtnText>
+      <StyledSaveCon
+        onClick={handleSaveMarkdown}
+        $isLoading={mutation.isPending}
+      >
+        {mutation.isPending ? (
+          <Loader />
+        ) : (
+          <StyledSaveBtnText>Save changes</StyledSaveBtnText>
+        )}
       </StyledSaveCon>
     </StyledDeleteSave>
   );
