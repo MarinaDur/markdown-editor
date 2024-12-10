@@ -4,9 +4,11 @@ import Heading from "../ui/Heading";
 import Button from "../ui/Button";
 import width from "../ui/Width";
 import Docs from "./Docs";
-import { useMarkdown } from "../context/MarkdownContext";
+import { MarkDownDocs, useMarkdown } from "../context/MarkdownContext";
 import transition from "../ui/Transition";
 import ColorTheme from "./ColorTheme";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createDocument } from "../utils/apiCalls";
 
 interface StyledSideMenuConProps {
   $isMenuOpen: boolean;
@@ -14,11 +16,11 @@ interface StyledSideMenuConProps {
 
 const StyledSideMenuCon = styled.div<StyledSideMenuConProps>`
   width: ${(props) => (props.$isMenuOpen ? "250px" : "0")};
-  height: 100%;
+  min-height: 100%;
   background: var(--cl-bg-slider);
   ${flex}
   align-items: flex-start;
-  overflow: hidden;
+  /* overflow: scroll; */
   ${transition}
   position: absolute;
   top: 0;
@@ -45,14 +47,76 @@ const StyledTile = styled(Heading)`
 
 function SideMenu() {
   // const { isMenuOpen, handleAddNewDoc } = useMarkdown();
-  const { isMenuOpen } = useMarkdown();
+  const { isMenuOpen, setCurrentDoc } = useMarkdown();
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: createDocument,
+    onMutate: async (newDoc) => {
+      // Log new document creation
+      console.log("New document created:", newDoc);
+
+      await queryClient.cancelQueries({ queryKey: ["documents"] });
+
+      const previousDocs = queryClient.getQueryData<MarkDownDocs[]>([
+        "documents",
+      ]);
+
+      queryClient.setQueryData(
+        ["documents"],
+        (old: MarkDownDocs[] | undefined) => [...(old || []), newDoc]
+      );
+
+      return { previousDocs };
+    },
+    onError: (err, newDoc, context) => {
+      if (context?.previousDocs) {
+        queryClient.setQueryData(["documents"], context.previousDocs);
+      }
+      console.log("Error adding new doc:", err);
+    },
+    onSuccess: () => {
+      setCurrentDoc(0);
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
+    },
+  });
+
+  function handleCreateMarkdown() {
+    const existingDocs =
+      queryClient.getQueryData<MarkDownDocs[]>(["documents"]) || [];
+
+    // Extract numbers from document names
+    const numbers = existingDocs.map((doc) => {
+      const match = doc.name.match(/untitled-document-(\d+)\.md/);
+      return match ? parseInt(match[1]) : 0;
+    });
+
+    // Find the maximum number and increment it
+    const maxNumber = Math.max(...numbers);
+    const newDocNumber = maxNumber + 1;
+    const newDocName = `untitled-document-${newDocNumber}.md`;
+
+    // Send the mutation with the generated name
+    mutation.mutate({
+      name: newDocName,
+      content: "",
+    });
+  }
 
   return (
     <StyledSideMenuCon $isMenuOpen={isMenuOpen}>
       <StyledSideMenu>
         <StyledTile as="h2">MARKDOWN</StyledTile>
         <Heading as="h3">MY DOCUMENT</Heading>
-        <Button text="+ New Document" />
+        <Button
+          handleClick={handleCreateMarkdown}
+          text="+ New Document"
+          isLoading={mutation.isPending}
+        />
         <Docs />
         <ColorTheme />
       </StyledSideMenu>

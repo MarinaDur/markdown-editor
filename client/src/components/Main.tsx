@@ -7,7 +7,7 @@ import { useMarkdown } from "../context/MarkdownContext";
 import transition from "../ui/Transition";
 import DeletePopup from "../ui/DeletePopup";
 import { fetchDocuments } from "../utils/apiCalls";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MarkDownDocs } from "../interfaces/documets";
 import Loader from "../ui/Loader";
 
@@ -38,6 +38,9 @@ const StyledMain = styled.div<StyledMainProps>`
 function Main() {
   const { isMenuOpen, setMarkdownValue, currentDoc, setDocNamevalue } =
     useMarkdown();
+
+  const queryClient = useQueryClient();
+
   const {
     data: documents,
     isLoading,
@@ -50,8 +53,8 @@ function Main() {
 
   useEffect(() => {
     if (documents && currentDoc !== undefined) {
-      setMarkdownValue(documents[currentDoc].content);
-      setDocNamevalue(documents[currentDoc].name);
+      setMarkdownValue(documents[currentDoc]?.content || "");
+      setDocNamevalue(documents[currentDoc]?.name || "");
     }
   }, [documents, currentDoc, setMarkdownValue, setDocNamevalue]);
 

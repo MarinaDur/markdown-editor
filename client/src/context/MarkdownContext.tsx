@@ -58,10 +58,10 @@ interface MarkdownContextProps {
   handleEmail: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePasswordConfirm: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleLogin: (
-    e: React.FormEvent<HTMLFormElement>,
-    navigate: (path: string) => void
-  ) => void;
+  // handleLogin: (
+  //   e: React.FormEvent<HTMLFormElement>,
+  //   navigate: (path: string) => void
+  // ) => void;
   error: string | null;
   handleError: (err: string | null) => void;
   handleErrorReset: () => void;
@@ -73,6 +73,8 @@ interface MarkdownContextProps {
   setCurrentDocId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setMarkdownValue: React.Dispatch<React.SetStateAction<string>>;
   currentDocId: string | undefined;
+  setDeleteDocPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface MarkDownDocs {
@@ -111,9 +113,9 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  console.log("is logged in ", isLoggedIn);
+  // console.log("is logged in ", isLoggedIn);
   console.log("current doc id ", currentDocId);
   console.log("current doc ", currentDoc);
   function handleToggleMenu() {
@@ -333,60 +335,60 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     setError(err);
   }
 
-  async function handleLogin(
-    e: React.FormEvent<HTMLFormElement>,
-    navigate: (path: string) => void
-  ) {
-    setIsLoading(true);
-    e.preventDefault();
+  // async function handleLogin(
+  //   e: React.FormEvent<HTMLFormElement>,
+  //   navigate: (path: string) => void
+  // ) {
+  //   setIsLoading(true);
+  //   e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/v1/users/login",
-        {
-          email,
-          password,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+  //   try {
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/api/v1/users/login",
+  //       {
+  //         email,
+  //         password,
+  //       },
+  //       {
+  //         headers: { "Content-Type": "application/json" },
+  //         withCredentials: true,
+  //       }
+  //     );
 
-      // if (
-      //   response?.data?.status === "success" &&
-      //   response?.data?.data?.user?._id
-      // ) {
-      //   const docResponse = await axios.get(
-      //     "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-      //     {
-      //       withCredentials: true,
-      //     }
-      //   );
+  //     // if (
+  //     //   response?.data?.status === "success" &&
+  //     //   response?.data?.data?.user?._id
+  //     // ) {
+  //     //   const docResponse = await axios.get(
+  //     //     "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
+  //     //     {
+  //     //       withCredentials: true,
+  //     //     }
+  //     //   );
 
-      //   setDocuments(docResponse?.data?.data?.data);
-      //   setCurrentDocId(docResponse?.data?.data?.data[currentDocId || 0]._id);
-      //   setIsLoggedIn(true);
-      navigate("/markdown");
-      // }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setIsLoggedIn(false);
+  //     //   setDocuments(docResponse?.data?.data?.data);
+  //     //   setCurrentDocId(docResponse?.data?.data?.data[currentDocId || 0]._id);
+  //     //   setIsLoggedIn(true);
+  //     navigate("/markdown");
+  //     // }
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       setIsLoggedIn(false);
 
-        handleError(error.response?.data?.message);
-        console.log(error.response);
-      } else {
-        setIsLoggedIn(false);
+  //       handleError(error.response?.data?.message);
+  //       console.log(error.response);
+  //     } else {
+  //       setIsLoggedIn(false);
 
-        handleError("An unexpected error occurred");
-        console.error("An unexpected error occurred:", error);
-      }
-    } finally {
-      setIsLoading(false);
-      setEmail("");
-      setPassword("");
-    }
-  }
+  //       handleError("An unexpected error occurred");
+  //       console.error("An unexpected error occurred:", error);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //     setEmail("");
+  //     setPassword("");
+  //   }
+  // }
 
   // const handleLogout = () => {
   //   console.log("logged out");
@@ -450,7 +452,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     handleEmail,
     handlePassword,
     handlePasswordConfirm,
-    handleLogin,
+    // handleLogin,
     error,
     handleError,
     handleErrorReset,
@@ -462,6 +464,8 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     setCurrentDoc,
     currentDocId,
     setDocNamevalue,
+    setDeleteDocPopup,
+    // setIsLoggedIn,
   };
 
   return (

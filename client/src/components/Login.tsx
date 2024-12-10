@@ -9,6 +9,9 @@ import EyeIcon from "../ui/EyeIcon";
 import { useMarkdown } from "../context/MarkdownContext";
 import ErrorPopUp from "../ui/ErrorPopUp";
 import { useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../utils/apiCalls";
+import axios from "axios";
 
 const StyledParForgotPassword = styled(Paragraph)`
   color: var(--cl-text-main);
@@ -21,25 +24,37 @@ const StyledPasswordCon = styled(Container)`
 `;
 
 function Login() {
-  const navigate = useNavigate();
   const {
     email,
     password,
     handleEmail,
     handlePassword,
-    handleLogin,
+    // handleLogin,
+    handleError,
+    // setIsLoggedIn,
     // handleLogout,
   } = useMarkdown();
 
-  const location = useLocation();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   // If the user is on the login page ("/"), trigger logout
-  //   if (location.pathname === "/") {
-  //     handleLogout();
-  //   }
-  // }, [location.pathname, handleLogout]);
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log("Login successful:", data);
+      navigate("/markdown");
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        handleError(error.response?.data?.message);
+        console.log(error.response);
+      } else {
+        // setIsLoggedIn(false);
 
+        handleError("An unexpected error occurred");
+        console.error("An unexpected error occurred:", error);
+      }
+    },
+  });
   return (
     <LoginSignupTemp
       welcomeText="Welcome back"

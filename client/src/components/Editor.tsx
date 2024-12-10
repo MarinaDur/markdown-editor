@@ -51,12 +51,18 @@ const StyledTextArea = styled(TextareaAutosize)`
     min-height: 100vh;
   } */
 
-  min-height: 100vh;
+  min-height: calc(100vh - (56px + 52px));
   padding-bottom: 5rem;
   background: var(--cl-bg-main);
   &:focus {
     border: none;
     outline: none;
+  }
+
+  @media (min-width: 768px) {
+    & {
+      min-height: calc(100vh - (72px + 65px));
+    }
   }
 `;
 

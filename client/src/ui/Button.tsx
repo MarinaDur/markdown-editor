@@ -8,6 +8,7 @@ import Loader from "./Loader";
 interface ButtonProps {
   handleClick?: () => void;
   text: string;
+  isLoading?: boolean;
 }
 
 const StyledButton = styled.button`
@@ -20,8 +21,8 @@ const StyledButton = styled.button`
   gap: 1rem;
 `;
 
-function Button({ handleClick, text }: ButtonProps) {
-  const { isLoading } = useMarkdown();
+function Button({ handleClick, text, isLoading }: ButtonProps) {
+  // const { isLoading } = useMarkdown();
   return (
     <StyledButton onClick={handleClick} disabled={isLoading}>
       {isLoading ? <Loader /> : <Paragraph $type="all">{text}</Paragraph>}

@@ -17,9 +17,9 @@ export interface UpdatedData {
 }
 
 export interface UpdateDocumentVariables {
-  id: string;
+  id?: string;
   name?: string;
-  content: string;
+  content?: string;
   createdAt?: string;
 }
 

@@ -49,7 +49,9 @@ export const postDoc = catchAsync(async (req, res, next) => {
 });
 
 export const getUserDocs = catchAsync(async (req, res, next) => {
-  const documents = await Document.find({ user: req.user._id });
+  const documents = await Document.find({ user: req.user._id }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json({
     status: "success",

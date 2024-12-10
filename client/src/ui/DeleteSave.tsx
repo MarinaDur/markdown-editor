@@ -26,15 +26,13 @@ const StyledDeleteSave = styled.div`
 `;
 
 const StyledSaveCon = styled.div<StylesSaveConProps>`
-  background: ${(props) =>
-    props.$isLoading
-      ? 'url("spinner.gif") center/cover no-repeat'
-      : 'var(--cl-orange) url("icon-save.svg") no-repeat center'};
+  background: var(--cl-orange) url("icon-save.svg") no-repeat center;
   border-radius: 4px;
   min-width: 4rem;
   /* aspect-ratio: 1; */
   height: 4rem;
   cursor: pointer;
+  pointer-events: ${(props) => (props.$isLoading ? "none" : "auto")};
 
   &:hover {
     background-color: var(--cl-orange-hover);
@@ -50,6 +48,13 @@ const StyledSaveCon = styled.div<StylesSaveConProps>`
   @media (max-width: 767px) {
     span {
       display: none;
+    }
+
+    & {
+      background: ${(props) =>
+        props.$isLoading
+          ? 'url("spinner.gif") center/cover no-repeat'
+          : 'var(--cl-orange) url("icon-save.svg") no-repeat center'};
     }
   }
 `;
@@ -71,6 +76,7 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
   const mutation = useMutation({
     mutationFn: updateDocument,
     onSuccess: (data: any) => {
+      // Update the local cache optimistically
       queryClient.setQueryData<MarkDownDocs[] | undefined>(
         ["documents"],
         (oldData) =>
@@ -78,6 +84,9 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
             doc._id === data._id ? { ...doc, ...data } : doc
           )
       );
+
+      // Optionally, invalidate the query to refetch the updated data from the server
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
     },
   });
 
