@@ -3,6 +3,7 @@ import Login from "../components/Login";
 import App from "../App";
 import MainCon from "../components/MainCon";
 import Signup from "../components/Signup";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {

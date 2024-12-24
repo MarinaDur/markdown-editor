@@ -26,7 +26,7 @@ export const signup = [
     });
 
     req.user = newUser;
-   
+
     sendToken(newUser, 201, res);
   }),
 ];
@@ -52,8 +52,12 @@ export const logout = (req, res) => {
   res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
   });
-
+  req.session = null;
+  // res.clearCookie("jwt", {path: '/', domain: ""});
   res.status(200).json({ status: "success" });
 };
 

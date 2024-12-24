@@ -16,6 +16,7 @@ interface LoginSignupTempProps {
   buttonText: string;
   footerText: string;
   handleClick?: (e?: React.FormEvent<HTMLFormElement>) => void;
+  isLoading?: boolean;
 }
 
 const StyledCon = styled.div`
@@ -63,6 +64,7 @@ function LoginSignupTemp({
   buttonText,
   handleClick,
   footerText,
+  isLoading,
 }: LoginSignupTempProps) {
   return (
     <StyledCon>
@@ -73,7 +75,11 @@ function LoginSignupTemp({
       </StyledTextCon>
       <StyledInputCon onSubmit={handleClick}>
         {children}
-        <Button text={buttonText} handleClick={handleClick} />
+        <Button
+          text={buttonText}
+          handleClick={handleClick}
+          isLoading={isLoading}
+        />
       </StyledInputCon>
       <StyledFooterText $type="all">{footerText}</StyledFooterText>
     </StyledCon>

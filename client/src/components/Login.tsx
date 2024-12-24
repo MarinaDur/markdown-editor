@@ -31,6 +31,8 @@ function Login() {
     handlePassword,
     // handleLogin,
     handleError,
+    setEmail,
+    setPassword,
     // setIsLoggedIn,
     // handleLogout,
   } = useMarkdown();
@@ -54,16 +56,25 @@ function Login() {
         console.error("An unexpected error occurred:", error);
       }
     },
+    onSettled: () => {
+      // Reset email and password fields
+      setEmail("");
+      setPassword("");
+    },
   });
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    loginMutation.mutate({ email, password });
+  }
   return (
     <LoginSignupTemp
-      welcomeText="Welcome back"
+      welcomeText="Welcome Back"
       descText="Please login to your account"
       buttonText="Login"
       footerText="Don't have an account? Sign Up"
-      handleClick={(e) =>
-        handleLogin(e as React.FormEvent<HTMLFormElement>, navigate)
-      }
+      handleClick={(e) => handleSubmit(e as React.FormEvent<HTMLFormElement>)}
+      isLoading={loginMutation.isPending}
     >
       <LabelInput name="Email:" htmlFor="email" />
       <Input

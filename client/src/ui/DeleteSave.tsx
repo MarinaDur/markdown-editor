@@ -17,14 +17,6 @@ interface StylesSaveConProps {
   $isLoading: boolean;
 }
 
-const StyledDeleteSave = styled.div`
-  ${flex}
-  ${width}
-  gap: 1.9rem;
-  justify-content: flex-end;
-  width: 52.5%;
-`;
-
 const StyledSaveCon = styled.div<StylesSaveConProps>`
   background: var(--cl-orange) url("icon-save.svg") no-repeat center;
   border-radius: 4px;
@@ -104,7 +96,7 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
   }
 
   return (
-    <StyledDeleteSave>
+    <>
       <Svg
         width="18"
         height="20"
@@ -124,7 +116,7 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
           <StyledSaveBtnText>Save changes</StyledSaveBtnText>
         )}
       </StyledSaveCon>
-    </StyledDeleteSave>
+    </>
   );
 }
 

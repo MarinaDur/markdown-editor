@@ -52,12 +52,14 @@ interface MarkdownContextProps {
   handleCloseDeleteDocPopup: () => void;
   handleDarkMode: () => void;
   isDarkMode: boolean;
-  email: string | undefined;
-  password: string | undefined;
-  passwordConfirm: string | undefined;
+  email: string | null;
+  password: string | null;
+  passwordConfirm: string | null;
+  userName: string | null;
   handleEmail: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePasswordConfirm: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleUserName: (e: ChangeEvent<HTMLInputElement>) => void;
   // handleLogin: (
   //   e: React.FormEvent<HTMLFormElement>,
   //   navigate: (path: string) => void
@@ -74,6 +76,10 @@ interface MarkdownContextProps {
   setMarkdownValue: React.Dispatch<React.SetStateAction<string>>;
   currentDocId: string | undefined;
   setDeleteDocPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  setPassword: React.Dispatch<React.SetStateAction<string | null>>;
+  setEmail: React.Dispatch<React.SetStateAction<string | null>>;
+  setPasswordConfirm: React.Dispatch<React.SetStateAction<string | null>>;
+  setUserName: React.Dispatch<React.SetStateAction<string | null>>;
   // setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -106,11 +112,10 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   const [isDocDeleted, setIsDocDeleted] = useState<boolean>(false);
   const [deleteDocPopup, setDeleteDocPopup] = useState<boolean>(false);
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
-  const [email, setEmail] = useState<string | undefined>("");
-  const [password, setPassword] = useState<string | undefined>("");
-  const [passwordConfirm, setPasswordConfirm] = useState<string | undefined>(
-    ""
-  );
+  const [email, setEmail] = useState<string | null>("");
+  const [password, setPassword] = useState<string | null>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string | null>("");
+  const [userName, setUserName] = useState<string | null>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -201,6 +206,10 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   function handlePasswordConfirm(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setPasswordConfirm(e.target.value);
+  }
+  function handleUserName(e: ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    setUserName(e.target.value);
   }
 
   // function handleInputBlur() {
@@ -423,7 +432,8 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     [isDarkMode]
   );
 
-  // console.log(error);
+  console.log(userName, email, password, passwordConfirm);
+  console.log("user name:", userName);
 
   const contextValue: MarkdownContextProps = {
     isMenuOpen,
@@ -466,6 +476,12 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     setDocNamevalue,
     setDeleteDocPopup,
     // setIsLoggedIn,
+    setEmail,
+    setPassword,
+    userName,
+    handleUserName,
+    setPasswordConfirm,
+    setUserName,
   };
 
   return (

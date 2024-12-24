@@ -22,15 +22,6 @@ import { AppError } from "./utils/appError.js";
 
 const app = express();
 
-//Tells the browser to fetch a fresh copy of the page validate it with the server before displaying it, for instance if a ligged out user click on the back button, he will see a page where he is logged out
-app.use((req, res, next) => {
-  res.set(
-    "Cache-Control",
-    "no-cache, no-store, must-revalidate, private, max-age=0"
-  );
-  next();
-});
-
 //SET SECURITY HTTP HEADERS
 app.use(
   helmet.contentSecurityPolicy({
@@ -100,6 +91,17 @@ app.use(
 );
 
 app.use(cookieParser());
+
+//Tells the browser to fetch a fresh copy of the page validate it with the server before displaying it, for instance if a ligged out user click on the back button, he will see a page where he is logged out
+app.use((req, res, next) => {
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
 
 //Routes
 app.use("/", indexRouter);

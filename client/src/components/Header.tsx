@@ -7,6 +7,10 @@ import DeleteSave from "../ui/DeleteSave";
 import { useMarkdown } from "../context/MarkdownContext";
 import Heading from "../ui/Heading";
 import { Document } from "../interfaces/documets";
+import FontAwesomeIcons from "../ui/FoneAwsomeIcons";
+import { useMutation } from "@tanstack/react-query";
+import { logout } from "../utils/apiCalls";
+import Logout from "./Logout";
 
 // interface Documents {
 //   documents?: MarkDownDocs[] | undefined;
@@ -17,6 +21,7 @@ const StyledHeaderCon = styled.header`
   ${flex}
   ${width}
   overflow-x: hidden;
+
   /* flex: 1; */
 `;
 
@@ -24,7 +29,7 @@ const StylesHeader = styled.div`
   ${width}
   ${flex}
   justify-content: space-between;
-  padding: 0 0.8rem 0 2.4rem;
+  padding: 0 1.2rem 0 2.4rem;
   overflow: hidden;
   flex: 1;
   gap: 0.5rem;
@@ -69,6 +74,14 @@ const StyledTitle = styled(Heading)`
   }
 `;
 
+const StyledDeleteSaveLogoutCon = styled.div`
+  ${flex}
+  ${width}
+  gap: 1rem;
+  justify-content: flex-end;
+  width: 52.5%;
+`;
+
 function Header({ documents }: Document) {
   const {
     isMenuOpen,
@@ -101,9 +114,12 @@ function Header({ documents }: Document) {
               )
           )}
         </StyledCon>
-        {documents && documents.length > 0 && (
-          <DeleteSave document={documents[currentDoc || 0]} />
-        )}
+        <StyledDeleteSaveLogoutCon>
+          {documents && documents.length > 0 && (
+            <DeleteSave document={documents[currentDoc || 0]} />
+          )}
+          <Logout />
+        </StyledDeleteSaveLogoutCon>
       </StylesHeader>
     </StyledHeaderCon>
   );
