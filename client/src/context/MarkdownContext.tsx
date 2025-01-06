@@ -81,6 +81,10 @@ interface MarkdownContextProps {
   setPasswordConfirm: React.Dispatch<React.SetStateAction<string | null>>;
   setUserName: React.Dispatch<React.SetStateAction<string | null>>;
   // setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  showPassword: boolean;
+  showConfirmPassword: boolean;
+  togglePasswordVisibility: () => void;
+  toggleConfirmPasswordVisibility: () => void;
 }
 
 export interface MarkDownDocs {
@@ -118,11 +122,16 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   const [userName, setUserName] = useState<string | null>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
+
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   // console.log("is logged in ", isLoggedIn);
   console.log("current doc id ", currentDocId);
   console.log("current doc ", currentDoc);
+  console.log("Error", error);
   function handleToggleMenu() {
     setIsMenuOpen((prev) => !prev);
   }
@@ -409,6 +418,14 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
 
   // console.log(documents);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prevState) => !prevState);
+  };
+
   function handleErrorReset() {
     if (error !== null) {
       setError(null);
@@ -482,6 +499,10 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
     handleUserName,
     setPasswordConfirm,
     setUserName,
+    showPassword,
+    togglePasswordVisibility,
+    showConfirmPassword,
+    toggleConfirmPasswordVisibility,
   };
 
   return (

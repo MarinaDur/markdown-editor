@@ -87,6 +87,7 @@ function DeletePopup() {
     <SlidingScreen
       isOpen={deleteDocPopup}
       handleClosePopUp={handleCloseDeleteDocPopup}
+      isSliding={true}
     >
       <StyledPopup
         onClick={(e) => {

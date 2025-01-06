@@ -7,8 +7,9 @@ import EyeIcon from "../ui/EyeIcon";
 import { useMarkdown } from "../context/MarkdownContext";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { createDefaultDocs, signup } from "../utils/apiCalls";
+import { signup } from "../utils/apiCalls";
 import axios from "axios";
+import ErrorPopUp from "../ui/ErrorPopUp";
 
 const StyledPasswordCon = styled(Container)`
   align-items: flex-end;
@@ -39,15 +40,18 @@ function Signup() {
     // handleLogout,
     setPasswordConfirm,
     setUserName,
+    showPassword,
+    togglePasswordVisibility,
+    showConfirmPassword,
+    toggleConfirmPasswordVisibility,
   } = useMarkdown();
 
   const navigate = useNavigate();
 
   const signupMutation = useMutation({
     mutationFn: signup,
-    onSuccess: async () => {
-      // console.log("SignUp successful:", data);
-      await createDefaultDocs();
+    onSuccess: (data) => {
+      console.log("SignUp successful:", data);
       navigate("/markdown");
     },
     onError: (error) => {
@@ -77,7 +81,9 @@ function Signup() {
       welcomeText="Welcome!"
       descText="Create your account"
       buttonText="Sign up"
-      footerText="Already have an account? Login"
+      footerText="Already have an account?"
+      link="Login"
+      href="/"
       handleClick={(e) => handleSubmit(e as React.FormEvent<HTMLFormElement>)}
     >
       <LabelInput name="Name:" htmlFor="name" />
@@ -98,27 +104,39 @@ function Signup() {
         value={email || ""}
         handleChange={handleEmail}
       />
-      <LabelInput name="Password:" htmlFor="password" />
-      <Input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Password"
-        value={password || ""}
-        handleChange={handlePassword}
-      />
+      <StyledPasswordCon>
+        <LabelInput name="Password:" htmlFor="password" />
+        <Input
+          type={showPassword ? "text" : "password"}
+          id="password"
+          name="password"
+          placeholder="Password"
+          value={password || ""}
+          handleChange={handlePassword}
+        />
+        <EyeIcon
+          bottom="25%"
+          showPassword={showPassword}
+          handlePasswordVisibility={togglePasswordVisibility}
+        />
+      </StyledPasswordCon>
       <StyledPasswordCon>
         <LabelInput name="Confirm password:" htmlFor="confirmPassword" />
         <Input
-          type="password"
+          type={showConfirmPassword ? "text" : "password"}
           id="confirmPassword"
           name="confirmPassword"
           placeholder="Confirm password"
           value={passwordConfirm || ""}
           handleChange={handlePasswordConfirm}
         />
-        <EyeIcon bottom="25%" />
+        <EyeIcon
+          bottom="25%"
+          showPassword={showConfirmPassword}
+          handlePasswordVisibility={toggleConfirmPasswordVisibility}
+        />
       </StyledPasswordCon>
+      <ErrorPopUp />
     </LoginSignupTemp>
   );
 }

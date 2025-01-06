@@ -9,3 +9,13 @@ export interface UserSignUp {
   password: string | null;
   passwordConfirm: string | null;
 }
+
+export interface Email {
+  email: string | null;
+}
+
+export interface ResetToken {
+  token: string | undefined;
+  password: string | null;
+  passwordConfirm: string | null;
+}

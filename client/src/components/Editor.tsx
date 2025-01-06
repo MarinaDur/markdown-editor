@@ -50,6 +50,7 @@ const StyledTextArea = styled(TextareaAutosize)`
     /* min-height: calc(100vh - 56px - 48px);
     min-height: 100vh;
   } */
+     overflow: hidden;
 
   min-height: calc(100vh - (56px + 52px));
   padding-bottom: 5rem;

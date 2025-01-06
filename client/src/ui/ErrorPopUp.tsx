@@ -37,6 +37,7 @@ const StyledErrorPopUp1 = styled.div<StyledErrorPopUp>`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 1s ease-in-out;
   z-index: 1000;
+  max-width: 300px;
   animation: ${(props) =>
     props.$isError
       ? css`
@@ -52,7 +53,7 @@ function ErrorPopUp() {
     if (e.animationName === "fOuniJ" && error) {
       setTimeout(() => {
         handleErrorReset();
-      }, 3000);
+      }, 5000);
     }
   };
 

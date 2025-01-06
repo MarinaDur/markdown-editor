@@ -10,7 +10,16 @@ class Email {
 
   newTransport() {
     if (process.env.NODE_ENV === "production") {
-      return 1;
+      console.log("Production email");
+      return nodemailer.createTransport({
+        host: process.env.EMAIL_HOST_PROD,
+        port: process.env.EMAIL_PORT_PROD,
+        secure: false,
+        auth: {
+          user: process.env.EMAIL_PROD,
+          pass: process.env.EMAIL_API_KEY_PROD,
+        },
+      });
     }
 
     return nodemailer.createTransport({
@@ -38,13 +47,14 @@ class Email {
   async sendPasswordReset() {
     const message = "Click on the link to reset your password.";
     const htmlContent = `
+    <h1 style="font-size: 2rem; font-family: 'Roboto Slab', sans-serif; font-weight: 700; color:hsla(216, 9%, 23%, 1);">MARKDOWN</h1>
       <p>Hi ${this.firstName},</p>
       <p>You requested a password reset. Click the button below to reset your password:</p>
       <a href="${this.url}" style="
         display: inline-block;
         padding: 10px 20px;
         margin: 10px 0;
-        background-color: #4CAF50;
+        background-color: hsla(13, 75%, 58%, 1);
         color: white;
         text-decoration: none;
         border-radius: 5px;

@@ -20,11 +20,12 @@ const StyledSideMenuCon = styled.div<StyledSideMenuConProps>`
   background: var(--cl-bg-slider);
   ${flex}
   align-items: flex-start;
-  /* overflow: scroll; */
   ${transition}
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  overflow-y: auto;
+  height: 100%;
 `;
 
 const StyledSideMenu = styled.div`

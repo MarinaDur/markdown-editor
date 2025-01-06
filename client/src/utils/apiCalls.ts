@@ -1,26 +1,21 @@
 import axios from "axios";
 import { UpdateDocumentVariables } from "../interfaces/documets";
-import { UserLogin, UserSignUp } from "../interfaces/users";
+import { Email, ResetToken, UserLogin, UserSignUp } from "../interfaces/users";
 
-const url = "http://127.0.0.1:8000";
+const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+// console.log("BASE_URL", BASE_URL);
 
 export async function fetchDocuments() {
-  const response = await axios.get(
-    "http://127.0.0.1:8000/api/v1/documents/getUserDocs",
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axios.get(`${BASE_URL}/v1/documents/getUserDocs`, {
+    withCredentials: true,
+  });
   return response?.data?.data?.data; // Adjust based on your API's response structure
 }
 
 export async function fetchOneDocuments(docId: string) {
-  const response = await axios.get(
-    `http://127.0.0.1:8000/api/v1/documents/${docId}`,
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axios.get(`${BASE_URL}/v1/documents/${docId}`, {
+    withCredentials: true,
+  });
   return response; // Adjust based on your API's response structure
 }
 
@@ -30,7 +25,7 @@ export async function updateDocument({
   content,
 }: UpdateDocumentVariables): Promise<any> {
   const response = await axios.patch(
-    `http://127.0.0.1:8000/api/v1/documents/${id}`,
+    `${BASE_URL}/v1/documents/${id}`,
     { name, content },
     {
       headers: { "Content-Type": "application/json" },
@@ -51,7 +46,7 @@ export async function createDocument({
   content,
 }: UpdateDocumentVariables): Promise<any> {
   const response = await axios.post(
-    `http://127.0.0.1:8000/api/v1/documents/postDoc`,
+    `${BASE_URL}/v1/documents/postDoc`,
     { name, content },
     {
       headers: { "Content-Type": "application/json" },
@@ -71,7 +66,7 @@ export async function deleteDocument({
   id,
 }: UpdateDocumentVariables): Promise<any> {
   const response = await axios.delete(
-    `http://127.0.0.1:8000/api/v1/documents/${id}`,
+    `${BASE_URL}/v1/documents/${id}`,
 
     {
       headers: { "Content-Type": "application/json" },
@@ -89,7 +84,7 @@ export async function deleteDocument({
 
 export async function login({ email, password }: UserLogin): Promise<any> {
   const response = await axios.post(
-    "http://127.0.0.1:8000/api/v1/users/login",
+    `${BASE_URL}/v1/users/login`,
     {
       email,
       password,
@@ -104,13 +99,10 @@ export async function login({ email, password }: UserLogin): Promise<any> {
 }
 
 export async function logout() {
-  const response = await axios.get(
-    "http://127.0.0.1:8000/api/v1/users/logout",
-    {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    }
-  );
+  const response = await axios.get(`${BASE_URL}/v1/users/logout`, {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+  });
 
   if (response.data.status === "success") {
     console.log("response from patch", response);
@@ -121,7 +113,7 @@ export async function logout() {
 }
 
 export async function authMe() {
-  const response = await axios.get("http://127.0.0.1:8000/api/v1/users/getMe", {
+  const response = await axios.get(`${BASE_URL}/v1/users/getMe`, {
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
   });
@@ -141,7 +133,7 @@ export async function signup({
   passwordConfirm,
 }: UserSignUp): Promise<any> {
   const response = await axios.post(
-    "http://127.0.0.1:8000/api/v1/users/signup",
+    `${BASE_URL}/v1/users/signup`,
     {
       name: userName,
       email,
@@ -157,19 +149,37 @@ export async function signup({
   return response?.data;
 }
 
-export async function createDefaultDocs() {
+export async function forgotPassword({ email }: Email): Promise<any> {
   const response = await axios.post(
-    "http://127.0.0.1:8000/api/v1/documents/createDefaultDocsOnSignup",
+    `${BASE_URL}/v1/users/forgotPassword`,
+    {
+      email,
+    },
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     }
   );
 
-  if (response.data.status === "success") {
-    console.log("response from patch", response);
-    return response?.data?.status;
-  }
+  return response;
+}
 
-  throw new Error("Couldn't create documents ");
+export async function resetPassword({
+  token,
+  password,
+  passwordConfirm,
+}: ResetToken): Promise<any> {
+  const response = await axios.patch(
+    `${BASE_URL}/v1/users/resetPassword/${token}`,
+    {
+      password,
+      passwordConfirm,
+    },
+    {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    }
+  );
+
+  return response;
 }

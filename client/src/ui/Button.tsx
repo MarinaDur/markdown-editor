@@ -4,11 +4,13 @@ import flex from "./Flex";
 import Paragraph from "./Paragraph";
 import { useMarkdown } from "../context/MarkdownContext";
 import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
 
 interface ButtonProps {
   handleClick?: () => void;
-  text: string;
+  text?: string;
   isLoading?: boolean;
+  navigateTo?: string;
 }
 
 const StyledButton = styled.button`
@@ -21,10 +23,16 @@ const StyledButton = styled.button`
   gap: 1rem;
 `;
 
-function Button({ handleClick, text, isLoading }: ButtonProps) {
+function Button({ handleClick, text, isLoading, navigateTo }: ButtonProps) {
   // const { isLoading } = useMarkdown();
+  const navigate = useNavigate();
+
+  const onClickHandler = () => {
+    if (handleClick) handleClick(); // Execute the provided click handler
+    else if (navigateTo) navigate(navigateTo); // Navigate if `navigateTo` is provided
+  };
   return (
-    <StyledButton onClick={handleClick} disabled={isLoading}>
+    <StyledButton onClick={onClickHandler} disabled={isLoading}>
       {isLoading ? <Loader /> : <Paragraph $type="all">{text}</Paragraph>}
     </StyledButton>
   );

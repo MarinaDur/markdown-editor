@@ -72,7 +72,7 @@ function MarkdownCon({ documents, isLoading }: MarkDownConProps) {
   return (
     <StyledMarkdownCon $isPreview={isPreview}>
       {isLoading && (
-        <SlidingScreen isOpen={isLoading}>
+        <SlidingScreen isOpen={isLoading} isSliding={false}>
           <Loader />
         </SlidingScreen>
       )}

@@ -1,52 +1,49 @@
 import { styled } from "styled-components";
-import { useLocation, useNavigate } from "react-router-dom";
-import Input from "../ui/Input";
-import Paragraph from "../ui/Paragraph";
-import LabelInput from "../ui/LabelInput";
-import Container from "../ui/Container";
 import LoginSignupTemp from "../ui/LoginSignupTemp";
-import EyeIcon from "../ui/EyeIcon";
+import LabelInput from "../ui/LabelInput";
+import Input from "../ui/Input";
 import { useMarkdown } from "../context/MarkdownContext";
-import ErrorPopUp from "../ui/ErrorPopUp";
-import { useEffect } from "react";
+import EyeIcon from "../ui/EyeIcon";
+import Container from "../ui/Container";
+import { resetPassword } from "../utils/apiCalls";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../utils/apiCalls";
 import axios from "axios";
-
-const StyledParForgotPassword = styled(Paragraph)`
-  color: var(--cl-orange);
-  text-decoration: underline;
-`;
+import { useNavigate, useParams } from "react-router-dom";
+import ErrorPopUp from "../ui/ErrorPopUp";
 
 const StyledPasswordCon = styled(Container)`
-  gap: 0.5rem;
   align-items: flex-end;
   position: relative;
 `;
 
-function Login() {
+function ResetPassword() {
   const {
-    email,
     password,
-    handleEmail,
     handlePassword,
-    // handleLogin,
+    handlePasswordConfirm,
+    passwordConfirm,
     handleError,
-    setEmail,
     setPassword,
-    // setIsLoggedIn,
-    // handleLogout,
+    setPasswordConfirm,
+    setUserName,
     showPassword,
     togglePasswordVisibility,
+    showConfirmPassword,
+    toggleConfirmPasswordVisibility,
   } = useMarkdown();
 
   const navigate = useNavigate();
+  const { token } = useParams();
 
-  const loginMutation = useMutation({
-    mutationFn: login,
+  const resetPassMutation = useMutation({
+    mutationFn: resetPassword,
     onSuccess: (data) => {
-      console.log("Login successful:", data);
-      navigate("/markdown");
+      console.log("reset successful", data);
+      navigate("/success-message", {
+        state: {
+          message: "You have successfully reset your password",
+        },
+      });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -61,35 +58,25 @@ function Login() {
     },
     onSettled: () => {
       // Reset email and password fields
-      setEmail("");
       setPassword("");
+      setPasswordConfirm("");
     },
   });
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    loginMutation.mutate({ email, password });
+    resetPassMutation.mutate({ token, password, passwordConfirm });
   }
+
   return (
     <LoginSignupTemp
-      welcomeText="Welcome Back"
-      descText="Please login to your account"
-      buttonText="Login"
-      footerText="Don't have an account?"
-      link="Sign up"
-      href="/signup"
+      welcomeText="Reset Password"
+      descText="Please enter your new password"
+      buttonText="Change Password"
       handleClick={(e) => handleSubmit(e as React.FormEvent<HTMLFormElement>)}
-      isLoading={loginMutation.isPending}
+
+      //   isLoading={forgotPassMutation.isPending}
     >
-      <LabelInput name="Email:" htmlFor="email" />
-      <Input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Email address"
-        value={email || ""}
-        handleChange={handleEmail}
-      />
       <StyledPasswordCon>
         <LabelInput name="Password:" htmlFor="password" />
         <Input
@@ -101,17 +88,30 @@ function Login() {
           handleChange={handlePassword}
         />
         <EyeIcon
-          bottom="51%"
+          bottom="25%"
           showPassword={showPassword}
           handlePasswordVisibility={togglePasswordVisibility}
         />
-        <StyledParForgotPassword as="a" $type="all" href="/forgot-password">
-          Forgot password?
-        </StyledParForgotPassword>
+      </StyledPasswordCon>
+      <StyledPasswordCon>
+        <LabelInput name="Confirm password:" htmlFor="confirmPassword" />
+        <Input
+          type={showConfirmPassword ? "text" : "password"}
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm password"
+          value={passwordConfirm || ""}
+          handleChange={handlePasswordConfirm}
+        />
+        <EyeIcon
+          bottom="25%"
+          showPassword={showConfirmPassword}
+          handlePasswordVisibility={toggleConfirmPasswordVisibility}
+        />
       </StyledPasswordCon>
       <ErrorPopUp />
     </LoginSignupTemp>
   );
 }
 
-export default Login;
+export default ResetPassword;

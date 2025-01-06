@@ -11,6 +11,7 @@ const StyledColorTheme = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   gap: 0.7rem;
+  padding-bottom: 1rem;
 `;
 
 function ColorTheme() {

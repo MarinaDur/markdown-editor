@@ -5,7 +5,7 @@ export const createToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
-export const sendToken = (user, statusCode, res) => {
+export const sendToken = (user, statusCode, res, defaultDocsError = false) => {
   const token = createToken(user._id);
   console.log(token);
   const cookieOptions = {
@@ -31,5 +31,9 @@ export const sendToken = (user, statusCode, res) => {
     data: {
       user,
     },
+    ...(defaultDocsError && {
+      message:
+        "User created successfully, but default documents could not be created.",
+    }),
   });
 };
