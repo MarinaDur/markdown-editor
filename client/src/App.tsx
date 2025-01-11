@@ -16,7 +16,7 @@ function App() {
         <MarkdownProvider>
           <RouterProvider router={router} />
         </MarkdownProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </>
   );
