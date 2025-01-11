@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Input from "../ui/Input";
 import Paragraph from "../ui/Paragraph";
 import LabelInput from "../ui/LabelInput";
@@ -8,7 +8,6 @@ import LoginSignupTemp from "../ui/LoginSignupTemp";
 import EyeIcon from "../ui/EyeIcon";
 import { useMarkdown } from "../context/MarkdownContext";
 import ErrorPopUp from "../ui/ErrorPopUp";
-import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../utils/apiCalls";
 import axios from "axios";
@@ -30,12 +29,9 @@ function Login() {
     password,
     handleEmail,
     handlePassword,
-    // handleLogin,
     handleError,
     setEmail,
     setPassword,
-    // setIsLoggedIn,
-    // handleLogout,
     showPassword,
     togglePasswordVisibility,
   } = useMarkdown();
@@ -53,14 +49,11 @@ function Login() {
         handleError(error.response?.data?.message);
         console.log(error.response);
       } else {
-        // setIsLoggedIn(false);
-
         handleError("An unexpected error occurred");
         console.error("An unexpected error occurred:", error);
       }
     },
     onSettled: () => {
-      // Reset email and password fields
       setEmail("");
       setPassword("");
     },

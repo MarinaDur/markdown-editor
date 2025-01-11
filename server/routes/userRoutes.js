@@ -9,7 +9,6 @@ import {
   resetPassword,
 } from "../controllers/authController.js";
 import { getMe } from "../controllers/userController.js";
-import { createDefaultDocsOnSignup } from "../controllers/docController.js";
 
 const router = express.Router();
 

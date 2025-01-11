@@ -1,13 +1,10 @@
 import { styled } from "styled-components";
 import flex from "../ui/Flex";
-import Input from "../ui/Input";
 import Heading from "../ui/Heading";
 import Paragraph from "../ui/Paragraph";
 import Button from "../ui/Button";
-import LabelInput from "../ui/LabelInput";
 import padding from "../ui/Padding";
 import Container from "../ui/Container";
-import Svg from "../ui/Svg";
 
 interface LoginSignupTempProps {
   children?: React.ReactNode;

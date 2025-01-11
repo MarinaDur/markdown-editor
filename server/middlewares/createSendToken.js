@@ -22,7 +22,6 @@ export const sendToken = (user, statusCode, res, defaultDocsError = false) => {
   res.cookie("jwt", token, cookieOptions);
   // res.header("Access-Control-Allow-Credentials", true);
 
-  console.log("JWT cookie set:", token);
   user.password = undefined;
 
   res.status(statusCode).json({

@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
-import morgan from "morgan"; // Remove the duplicate `morgan` import
+import morgan from "morgan";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
@@ -9,16 +8,13 @@ import mongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
 import hpp from "hpp";
 import dotenv from "dotenv";
-
-dotenv.config({ path: "./config.env" });
-
-// const indexRouter = require("./routes/index");
 import { indexRouter } from "./routes/index.js";
-// const userRouter = require("./routes/userRoutes");
 import userRouter from "./routes/userRoutes.js";
 import docRouter from "./routes/docRoutes.js";
 import globalErrorHandler from "./middlewares/errorHandler.js";
 import { AppError } from "./utils/appError.js";
+
+dotenv.config({ path: "./config.env" });
 
 const app = express();
 

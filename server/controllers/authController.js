@@ -62,7 +62,6 @@ export const signup = [
 
       await Document.insertMany(documents);
     } catch (err) {
-      console.error("Error creating default documents:", err);
       req.defaultDocsError = true;
       // Optionally log this or notify the user of a partial success
     }
@@ -74,7 +73,6 @@ export const signup = [
 ];
 
 export const login = catchAsync(async (req, res, next) => {
-  console.log("Login route hit with body:", req.body);
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -104,13 +102,10 @@ export const logout = (req, res) => {
 };
 
 export const protect = catchAsync(async (req, res, next) => {
-  console.log("Headers:", req.headers);
-
   const token = req.cookies.jwt;
   // req.headers.authorization?.startsWith("Bearer")
   //   ? req.headers.authorization.split(" ")[1]
-  console.log("token", req.cookies.jwt);
-  console.log("cookies", req.cookies);
+
   if (!token || token === "loggedout") {
     return next(
       new AppError("You are not logged in, please log in to get access", 400)
@@ -145,8 +140,6 @@ export const protect = catchAsync(async (req, res, next) => {
 });
 
 export const forgotPassword = catchAsync(async (req, res, next) => {
-  console.log("Request body:", req.body);
-
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -162,7 +155,6 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   try {
     // Attempt to save the user with the reset token and expiry
     await user.save({ validateBeforeSave: false });
-    console.log("User after save:", user); // Log user to check token fields
 
     // const resetURL = `${req.protocol}://${req.get(
     //   "host"

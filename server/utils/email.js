@@ -17,7 +17,7 @@ class Email {
         secure: false,
         auth: {
           user: process.env.EMAIL_PROD,
-          pass: process.env.EMAIL_API_KEY_PROD,
+          pass: process.env.EMAIL_PASSWORD_PROD,
         },
       });
     }

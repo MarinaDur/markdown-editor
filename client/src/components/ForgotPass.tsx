@@ -1,4 +1,3 @@
-import { styled } from "styled-components";
 import LoginSignupTemp from "../ui/LoginSignupTemp";
 import LabelInput from "../ui/LabelInput";
 import Input from "../ui/Input";
@@ -8,8 +7,6 @@ import { forgotPassword } from "../utils/apiCalls";
 import axios from "axios";
 import ErrorPopUp from "../ui/ErrorPopUp";
 import { useNavigate } from "react-router-dom";
-
-const StyledForgetPass = styled.div``;
 
 function ForgotPass() {
   const { email, handleEmail, handleError, setEmail } = useMarkdown();
@@ -30,14 +27,11 @@ function ForgotPass() {
         handleError(error.response?.data?.message);
         console.log(error.response);
       } else {
-        // setIsLoggedIn(false);
-
         handleError("An unexpected error occurred");
         console.error("An unexpected error occurred:", error);
       }
     },
     onSettled: () => {
-      // Reset email and password fields
       setEmail("");
     },
   });

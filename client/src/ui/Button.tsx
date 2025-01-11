@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import width from "./Width";
 import flex from "./Flex";
 import Paragraph from "./Paragraph";
-import { useMarkdown } from "../context/MarkdownContext";
 import Loader from "./Loader";
 import { useNavigate } from "react-router-dom";
 
@@ -24,12 +23,11 @@ const StyledButton = styled.button`
 `;
 
 function Button({ handleClick, text, isLoading, navigateTo }: ButtonProps) {
-  // const { isLoading } = useMarkdown();
   const navigate = useNavigate();
 
   const onClickHandler = () => {
-    if (handleClick) handleClick(); // Execute the provided click handler
-    else if (navigateTo) navigate(navigateTo); // Navigate if `navigateTo` is provided
+    if (handleClick) handleClick();
+    else if (navigateTo) navigate(navigateTo);
   };
   return (
     <StyledButton onClick={onClickHandler} disabled={isLoading}>

@@ -16,12 +16,6 @@ const StyledPasswordCon = styled(Container)`
   position: relative;
 `;
 
-const StyledEyeIcon = styled.div`
-  position: absolute;
-  bottom: 50%;
-  right: 1rem;
-`;
-
 function Signup() {
   const {
     email,
@@ -32,12 +26,9 @@ function Signup() {
     handleUserName,
     handlePasswordConfirm,
     passwordConfirm,
-    // handleLogin,
     handleError,
     setEmail,
     setPassword,
-    // setIsLoggedIn,
-    // handleLogout,
     setPasswordConfirm,
     setUserName,
     showPassword,
@@ -64,7 +55,6 @@ function Signup() {
       }
     },
     onSettled: () => {
-      // Reset email and password fields
       setEmail("");
       setPassword("");
       setPasswordConfirm("");

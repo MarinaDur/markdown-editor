@@ -25,7 +25,6 @@ function ResetPassword() {
     handleError,
     setPassword,
     setPasswordConfirm,
-    setUserName,
     showPassword,
     togglePasswordVisibility,
     showConfirmPassword,
@@ -37,8 +36,7 @@ function ResetPassword() {
 
   const resetPassMutation = useMutation({
     mutationFn: resetPassword,
-    onSuccess: (data) => {
-      console.log("reset successful", data);
+    onSuccess: () => {
       navigate("/success-message", {
         state: {
           message: "You have successfully reset your password",
@@ -50,14 +48,11 @@ function ResetPassword() {
         handleError(error.response?.data?.message);
         console.log(error.response);
       } else {
-        // setIsLoggedIn(false);
-
         handleError("An unexpected error occurred");
         console.error("An unexpected error occurred:", error);
       }
     },
     onSettled: () => {
-      // Reset email and password fields
       setPassword("");
       setPasswordConfirm("");
     },
@@ -74,8 +69,6 @@ function ResetPassword() {
       descText="Please enter your new password"
       buttonText="Change Password"
       handleClick={(e) => handleSubmit(e as React.FormEvent<HTMLFormElement>)}
-
-      //   isLoading={forgotPassMutation.isPending}
     >
       <StyledPasswordCon>
         <LabelInput name="Password:" htmlFor="password" />

@@ -1,10 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../components/Login";
-import App from "../App";
 import MainCon from "../components/MainCon";
 import Signup from "../components/Signup";
 import ForgotPass from "../components/ForgotPass";
-import ProtectedRoute from "../components/ProtectedRoute";
 import SuccessMessage from "../components/SuccessMessage";
 import ResetPassword from "../components/ResetPassword";
 
