@@ -29,6 +29,7 @@ mongoose
   .then(() => console.log("SUCCESSFULLY CONNECTED"))
   .catch((err) => {
     console.error("DATABASE CONNECTION ERROR:", err.message);
+    handleError(err);
   });
 
 ////////////******MODERN WAY CONNECT TO THE db*********////////////
