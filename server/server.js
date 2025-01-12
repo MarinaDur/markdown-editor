@@ -32,6 +32,10 @@ mongoose
     handleError(err);
   });
 
+mongoose.connection.on("error", (err) => {
+  logError(err);
+});
+
 ////////////******MODERN WAY CONNECT TO THE db*********////////////
 
 // async function main() {
