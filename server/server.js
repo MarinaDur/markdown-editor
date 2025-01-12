@@ -10,10 +10,11 @@ dotenv.config({ path: "./config.env" });
 mongoose.set("debug", true);
 
 //////////CONNECT TO DB/////////////
-const DB = process.env.DATABASE.replace(
-  "<PASSWORD>",
-  process.env.ENCODED_PASSWORD
-);
+const DB = process.env.DATABASE;
+// const DB = process.env.DATABASE.replace(
+//   "<PASSWORD>",
+//   process.env.ENCODED_PASSWORD
+// );
 
 mongoose
   .connect(DB)
