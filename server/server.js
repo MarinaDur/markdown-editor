@@ -16,10 +16,20 @@ const DB = process.env.DATABASE;
 //   process.env.ENCODED_PASSWORD
 // );
 
+// mongoose
+//   .connect(DB)
+//   .then(() => console.log("SUCCESSFULLY CONNECTED"))
+//   .catch((err) => console.log(err));
+
 mongoose
-  .connect(DB)
+  .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("SUCCESSFULLY CONNECTED"))
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.error("DATABASE CONNECTION ERROR:", err.message);
+  });
 
 ////////////******MODERN WAY CONNECT TO THE db*********////////////
 
