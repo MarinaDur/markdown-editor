@@ -1,12 +1,13 @@
-import { styled, keyframes } from "styled-components";
+import { styled } from "styled-components";
 import flex from "./Flex";
 import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import Button from "./Button";
-import { MarkDownDocs, useMarkdown } from "../context/MarkdownContext";
+import { useMarkdown } from "../context/MarkdownContext";
 import SlidingScreen from "./SlidingScreen";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDocument } from "../utils/apiCalls";
+import { MarkDownDocs } from "../interfaces/documets";
 
 const StyledPopup = styled.div`
   width: 90%;

@@ -1,15 +1,12 @@
 import { styled } from "styled-components";
 import { useEffect } from "react";
 import Header from "./Header";
-import width from "../ui/Width";
 import MarkdownCon from "./MarkdownCon";
 import { useMarkdown } from "../context/MarkdownContext";
 import transition from "../ui/Transition";
-import DeletePopup from "../ui/DeletePopup";
 import { fetchDocuments } from "../utils/apiCalls";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { MarkDownDocs } from "../interfaces/documets";
-import Loader from "../ui/Loader";
 
 interface StyledMainProps {
   $isMenuOpen: boolean;
@@ -39,14 +36,7 @@ function Main() {
   const { isMenuOpen, setMarkdownValue, currentDoc, setDocNamevalue } =
     useMarkdown();
 
-  const queryClient = useQueryClient();
-
-  const {
-    data: documents,
-    isLoading,
-    isError,
-    error,
-  } = useQuery<MarkDownDocs[]>({
+  const { data: documents, isLoading } = useQuery<MarkDownDocs[]>({
     queryKey: ["documents"],
     queryFn: fetchDocuments,
   });

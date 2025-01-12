@@ -1,16 +1,11 @@
 import { styled, css } from "styled-components";
-import { Document, MarkDownDocs } from "../interfaces/documets";
-
-import { useLocation } from "react-router-dom";
+import { MarkDownDocs } from "../interfaces/documets";
 import Preview from "./Preview";
 import flex from "../ui/Flex";
 import width from "../ui/Width";
 import Editor from "./Editor";
 import { useMarkdown } from "../context/MarkdownContext";
-import Paragraph from "../ui/Paragraph";
 import Heading from "../ui/Heading";
-import { useEffect } from "react";
-import axios from "axios";
 import Loader from "../ui/Loader";
 import SlidingScreen from "../ui/SlidingScreen";
 
@@ -67,7 +62,7 @@ const StyledPlaceHNoDoc = styled.div`
 `;
 
 function MarkdownCon({ documents, isLoading }: MarkDownConProps) {
-  const { isPreview, currentDoc } = useMarkdown();
+  const { isPreview } = useMarkdown();
 
   return (
     <StyledMarkdownCon $isPreview={isPreview}>

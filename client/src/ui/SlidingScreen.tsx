@@ -1,5 +1,4 @@
 import { css, keyframes, styled } from "styled-components";
-import { useMarkdown } from "../context/MarkdownContext";
 import flex from "./Flex";
 
 interface StyledSlidingScreenProps {

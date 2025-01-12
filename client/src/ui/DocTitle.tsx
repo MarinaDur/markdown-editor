@@ -3,10 +3,11 @@ import flex from "./Flex";
 import Svg from "./Svg";
 import Paragraph from "./Paragraph";
 import width from "./Width";
-import { MarkDownDocs } from "../context/MarkdownContext";
+// import { MarkDownDocs } from "../context/MarkdownContext";
 import textGeneral from "./TextGeneral";
 import textInputNameAndAll from "./TextInputNameAndAll";
 import { ChangeEvent } from "react";
+import { MarkDownDocs } from "../interfaces/documets";
 
 interface DocTitleProps {
   placement?: string;
@@ -72,7 +73,6 @@ function DocTitle({
   handleClick,
   handleChange,
   value,
-  handleBlur,
 }: DocTitleProps) {
   return (
     <StyledDocTitle onClick={handleClick}>

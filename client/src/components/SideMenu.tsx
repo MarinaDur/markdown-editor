@@ -4,11 +4,12 @@ import Heading from "../ui/Heading";
 import Button from "../ui/Button";
 import width from "../ui/Width";
 import Docs from "./Docs";
-import { MarkDownDocs, useMarkdown } from "../context/MarkdownContext";
+import { useMarkdown } from "../context/MarkdownContext";
 import transition from "../ui/Transition";
 import ColorTheme from "./ColorTheme";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createDocument } from "../utils/apiCalls";
+import { MarkDownDocs } from "../interfaces/documets";
 
 interface StyledSideMenuConProps {
   $isMenuOpen: boolean;
@@ -71,7 +72,7 @@ function SideMenu() {
 
       return { previousDocs };
     },
-    onError: (err, newDoc, context) => {
+    onError: (err, _, context) => {
       if (context?.previousDocs) {
         queryClient.setQueryData(["documents"], context.previousDocs);
       }

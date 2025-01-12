@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Paragraph from "./Paragraph";
 
 const Blockquote = styled.blockquote`
   background: var(--cl-bg-blockquote);

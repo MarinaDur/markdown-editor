@@ -7,9 +7,6 @@ import DeleteSave from "../ui/DeleteSave";
 import { useMarkdown } from "../context/MarkdownContext";
 import Heading from "../ui/Heading";
 import { Document } from "../interfaces/documets";
-import FontAwesomeIcons from "../ui/FoneAwsomeIcons";
-import { useMutation } from "@tanstack/react-query";
-import { logout } from "../utils/apiCalls";
 import Logout from "./Logout";
 
 // interface Documents {

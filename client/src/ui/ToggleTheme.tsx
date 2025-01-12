@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import flex from "../ui/Flex";
-import { useMarkdown } from "../context/MarkdownContext";
 
 interface StyledToggleThemeProps {
   $isDarkMode?: boolean;

@@ -21,12 +21,7 @@ const StyledDocs = styled.div`
 
 function Docs() {
   const { handleCurrentDoc, currentDoc } = useMarkdown();
-  const {
-    data: documents,
-    isLoading,
-    isError,
-    error,
-  } = useQuery<MarkDownDocs[]>({
+  const { data: documents } = useQuery<MarkDownDocs[]>({
     queryKey: ["documents"],
     queryFn: fetchDocuments,
   });

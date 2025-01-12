@@ -4,8 +4,7 @@ import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {
-    data: auth,
-    isLoading,
+    // data: auth,
     isError,
   } = useQuery({
     queryKey: ["auth"],

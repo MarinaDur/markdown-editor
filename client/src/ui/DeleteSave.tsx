@@ -1,14 +1,7 @@
 import { styled } from "styled-components";
-import flex from "./Flex";
 import Svg from "./Svg";
 import { useMarkdown } from "../context/MarkdownContext";
-import width from "./Width";
-import {
-  Document,
-  MarkDownDocs,
-  UpdateDocumentResponse,
-  UpdateDocumentVariables,
-} from "../interfaces/documets";
+import { MarkDownDocs } from "../interfaces/documets";
 import { updateDocument } from "../utils/apiCalls";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loader from "./Loader";
@@ -60,7 +53,7 @@ const StyledSaveBtnText = styled.span`
 `;
 
 function DeleteSave({ document }: { document: MarkDownDocs }) {
-  const { handleDeleteDocPopup, currentDoc, markdownValue, docNameValue } =
+  const { handleDeleteDocPopup, markdownValue, docNameValue } =
     useMarkdown();
 
   const queryClient = useQueryClient();

@@ -6,8 +6,6 @@ import textGeneral from "../ui/TextGeneral";
 import { useMarkdown } from "../context/MarkdownContext";
 import paddingPM from "../ui/PaddingPM";
 import TextareaAutosize from "react-textarea-autosize";
-import { MarkDownDocs } from "../interfaces/documets";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface StyledEditorProps {
   $isPreview: boolean;
@@ -67,12 +65,8 @@ const StyledTextArea = styled(TextareaAutosize)`
   }
 `;
 
-const StyledDiv = styled.div`
-  /* height: 100vh; */
-`;
-
 function Editor() {
-  const { markdownValue, handleEditor, isPreview, currentDocId } =
+  const { markdownValue, handleEditor, isPreview } =
     useMarkdown();
 
   return (
