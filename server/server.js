@@ -16,25 +16,25 @@ const DB = process.env.DATABASE;
 //   process.env.ENCODED_PASSWORD
 // );
 
-// mongoose
-//   .connect(DB)
-//   .then(() => console.log("SUCCESSFULLY CONNECTED"))
-//   .catch((err) => console.log(err));
-
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(DB)
   .then(() => console.log("SUCCESSFULLY CONNECTED"))
-  .catch((err) => {
-    console.error("DATABASE CONNECTION ERROR:", err.message);
-    handleError(err);
-  });
+  .catch((err) => console.log(err));
 
-mongoose.connection.on("error", (err) => {
-  logError(err);
-});
+// mongoose
+//   .connect(DB, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("SUCCESSFULLY CONNECTED"))
+//   .catch((err) => {
+//     console.error("DATABASE CONNECTION ERROR:", err.message);
+//     handleError(err);
+//   });
+
+// mongoose.connection.on("error", (err) => {
+//   logError(err);
+// });
 
 ////////////******MODERN WAY CONNECT TO THE db*********////////////
 
