@@ -7,6 +7,8 @@ dotenv.config({ path: "./config.env" });
 // const password = encodeURIComponent();
 // console.log(password);
 
+mongoose.set("debug", true);
+
 //////////CONNECT TO DB/////////////
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
