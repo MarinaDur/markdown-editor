@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.static("public"));
 
 //For Railway
-app.set("trust proxy", true);
+app.set("trust proxy", 1 /* number of proxies between user and server */);
 
 //LIMIT REQUESTS FROM THE API
 const limiter = rateLimit({
