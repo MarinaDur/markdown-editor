@@ -54,7 +54,7 @@ function DeletePopup() {
 
       return { previousDocs };
     },
-    onError: (err, deletedDocId, context) => {
+    onError: (err, _, context) => {
       if (context?.previousDocs) {
         queryClient.setQueryData(["documents"], context.previousDocs);
       }
