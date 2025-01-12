@@ -45,6 +45,9 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.static("public"));
 
+//For Railway
+app.set("trust proxy", true);
+
 //LIMIT REQUESTS FROM THE API
 const limiter = rateLimit({
   max: 200,
