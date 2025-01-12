@@ -46,15 +46,15 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.static("public"));
 
 //For Railway
-app.set("trust proxy", 1 /* number of proxies between user and server */);
+// app.set("trust proxy", 1 /* number of proxies between user and server */);
 
-//LIMIT REQUESTS FROM THE API
-const limiter = rateLimit({
-  max: 200,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP, please try again in an hour",
-});
-app.use("/api", limiter);
+// //LIMIT REQUESTS FROM THE API
+// const limiter = rateLimit({
+//   max: 200,
+//   windowMs: 60 * 60 * 1000,
+//   message: "Too many requests from this IP, please try again in an hour",
+// });
+// app.use("/api", limiter);
 
 app.use(morgan("dev"));
 
