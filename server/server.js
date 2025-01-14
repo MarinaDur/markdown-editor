@@ -21,6 +21,8 @@ const DB = process.env.DATABASE;
 //   .then(() => console.log("SUCCESSFULLY CONNECTED"))
 //   .catch((err) => console.log(err));
 
+console.log("DB Connection String:", DB);
+
 (async () => {
   try {
     await mongoose.connect(DB, {
