@@ -16,10 +16,22 @@ const DB = process.env.DATABASE;
 //   process.env.ENCODED_PASSWORD
 // );
 
-mongoose
-  .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("SUCCESSFULLY CONNECTED"))
-  .catch((err) => console.log(err));
+// mongoose
+//   .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log("SUCCESSFULLY CONNECTED"))
+//   .catch((err) => console.log(err));
+
+(async () => {
+  try {
+    await mongoose.connect(DB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB in production!");
+  } catch (err) {
+    console.error("MongoDB connection failed:", err.message);
+  }
+})();
 
 // mongoose
 //   .connect(DB, {
