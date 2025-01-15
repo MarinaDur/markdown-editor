@@ -11,8 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
-.env*
+.env.*
 .netlify
+.env.production
+.env.development
+
 
 # Editor directories and files
 .vscode/*
