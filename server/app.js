@@ -81,7 +81,10 @@ app.use(
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow your client origin
+    origin: [
+      "http://localhost:5173",
+      "https://markdowneditorfullstack.netlify.app/",
+    ], // Allow your client origin
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Specify allowed methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
     credentials: true, // Enable cookies or authorization headers if needed
