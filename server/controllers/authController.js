@@ -159,7 +159,8 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
     // const resetURL = `${req.protocol}://${req.get(
     //   "host"
     // )}/api/v1/users/resetPassword/${resetToken}`;
-    const resetURL = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetURL = `https://markdowneditorfullstack.netlify.app/reset-password/${resetToken}`;
+    // const resetURL = `http://localhost:5173/reset-password/${resetToken}`;
 
     await new Email(user, resetURL).sendPasswordReset();
     res.status(200).json({
