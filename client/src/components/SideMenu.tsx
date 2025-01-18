@@ -92,11 +92,11 @@ function SideMenu() {
     // Extract numbers from document names
     const numbers = existingDocs.map((doc) => {
       const match = doc.name.match(/untitled-document-(\d+)\.md/);
-      return match ? parseInt(match[1]) : 0;
+      return match ? parseInt(match[1], 10) : 0;
     });
 
     // Find the maximum number and increment it
-    const maxNumber = Math.max(...numbers);
+    const maxNumber = Math.max(0, ...numbers);
     const newDocNumber = maxNumber + 1;
     const newDocName = `untitled-document-${newDocNumber}.md`;
 
