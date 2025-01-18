@@ -71,7 +71,7 @@ function SideMenu() {
 
       return { previousDocs };
     },
-    onError: (err, _, context) => {
+    onError: (__, _, context) => {
       if (context?.previousDocs) {
         queryClient.setQueryData(["documents"], context.previousDocs);
       }

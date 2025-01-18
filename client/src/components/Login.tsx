@@ -40,7 +40,7 @@ function Login() {
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
+    onSuccess: () => {
       navigate("/markdown");
     },
     onError: (error) => {

@@ -41,7 +41,7 @@ function Signup() {
 
   const signupMutation = useMutation({
     mutationFn: signup,
-    onSuccess: (data) => {
+    onSuccess: () => {
       navigate("/markdown");
     },
     onError: (error) => {
