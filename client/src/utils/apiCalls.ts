@@ -34,7 +34,6 @@ export async function updateDocument({
   );
 
   if (response.data.status === "success") {
-    console.log("response from patch", response);
     return response?.data?.data?.data; // Correct part of the API response to return
   }
 
@@ -55,7 +54,6 @@ export async function createDocument({
   );
 
   if (response.data.status === "success") {
-    console.log("response from patch", response);
     return response?.data?.data?.document; // Correct part of the API response to return
   }
 
@@ -75,7 +73,6 @@ export async function deleteDocument({
   );
 
   if (response.data.status === "success") {
-    console.log("response from patch", response);
     return response?.data?.message;
   }
 
@@ -105,7 +102,6 @@ export async function logout() {
   });
 
   if (response.data.status === "success") {
-    console.log("response from patch", response);
     return response?.data?.message;
   }
 
@@ -119,7 +115,6 @@ export async function authMe() {
   });
 
   if (response.data.status === "success") {
-    console.log("response from patch", response);
     return response?.data?.status;
   }
 

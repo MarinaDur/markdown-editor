@@ -58,7 +58,6 @@ function DeletePopup() {
       if (context?.previousDocs) {
         queryClient.setQueryData(["documents"], context.previousDocs);
       }
-      console.log("Error adding new doc:", err);
     },
     onSuccess: () => {
       setCurrentDoc(0);

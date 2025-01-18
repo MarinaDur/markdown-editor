@@ -25,7 +25,6 @@ function ForgotPass() {
     onError: (error) => {
       if (axios.isAxiosError(error)) {
         handleError(error.response?.data?.message);
-        console.log(error.response);
       } else {
         handleError("An unexpected error occurred");
         console.error("An unexpected error occurred:", error);

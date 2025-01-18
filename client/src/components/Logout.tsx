@@ -17,7 +17,6 @@ function Logout() {
     onError: (error) => {
       if (axios.isAxiosError(error)) {
         // handleError(error.response?.data?.message);
-        console.log(error.response);
       } else {
         // setIsLoggedIn(false);
 

@@ -57,7 +57,6 @@ function SideMenu() {
     mutationFn: createDocument,
     onMutate: async (newDoc) => {
       // Log new document creation
-      console.log("New document created:", newDoc);
 
       await queryClient.cancelQueries({ queryKey: ["documents"] });
 
@@ -76,7 +75,6 @@ function SideMenu() {
       if (context?.previousDocs) {
         queryClient.setQueryData(["documents"], context.previousDocs);
       }
-      console.log("Error adding new doc:", err);
     },
     onSuccess: () => {
       setCurrentDoc(0);

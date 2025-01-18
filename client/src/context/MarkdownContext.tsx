@@ -105,8 +105,6 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
 
   const handleCurrentDoc = useCallback(
     (docIndex: number, docId: string, documents: MarkDownDocs[]) => {
-      console.log("doc Index", docIndex);
-      console.log("docId", documents[docIndex]?._id);
       sessionStorage.setItem("currentDoc", `${docIndex}`);
       setCurrentDoc(docIndex);
       setCurrentDocId(docId);

@@ -149,8 +149,8 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.createPasswordResetToken();
 
   // Debugging: Log the reset token and expiry
-  console.log("Generated reset token:", resetToken);
-  console.log("Reset token expiration:", user.passwordResetExpires);
+  // console.log("Generated reset token:", resetToken);
+  // console.log("Reset token expiration:", user.passwordResetExpires);
 
   try {
     // Attempt to save the user with the reset token and expiry
