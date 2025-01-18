@@ -46,10 +46,9 @@ Users should be able to:
 - CSS Grid
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
 - [Styled Components](https://styled-components.com/) - For styles
 - [Node.js](https://nodejs.org/) - For backend
-- [MongoBD Atlas cloud](https://www.mongodb.com/) - for DB
+- [MongoBD Atlas](https://www.mongodb.com/) - for DB
 - [mongoose](https://mongoosejs.com/) - object modeling for Node.js
 
 ### What I learned
