@@ -30,11 +30,11 @@ Users should be able to:
 
 ### Screenshot
 
-![](.client/Screenshot.png)
+![](./client/public/Screenshot.png)
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Add live site URL here](https://markdowneditorfullstack.netlify.app/)
 
 ## My process
 
