@@ -1,4 +1,4 @@
-const getStatus = (statusCode) => {
+export const getStatus = (statusCode) => {
   if (statusCode >= 400 && statusCode < 500) return "fail";
   return "error";
 };
