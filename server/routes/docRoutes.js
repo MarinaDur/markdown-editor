@@ -1,5 +1,5 @@
-import express from "express";
-import { protect } from "../controllers/authController.js";
+import express from 'express'
+import { protect } from '../controllers/authController.js'
 import {
   createDefaultDocsOnSignup,
   deleteUserOneDoc,
@@ -7,18 +7,18 @@ import {
   getUserOneDoc,
   postDoc,
   updateUserDoc,
-} from "../controllers/docController.js";
-const router = express.Router();
+} from '../controllers/docController.js'
+const router = express.Router()
 
-router.use(protect);
+router.use(protect)
 
-router.post("/createDefaultDocsOnSignup", createDefaultDocsOnSignup);
-router.post("/postDoc", postDoc);
-router.get("/getUserDocs", getUserDocs);
+router.post('/createDefaultDocsOnSignup', createDefaultDocsOnSignup)
+router.post('/postDoc', postDoc)
+router.get('/getUserDocs', getUserDocs)
 router
-  .route("/:docId")
+  .route('/:docId')
   .get(getUserOneDoc)
   .patch(updateUserDoc)
-  .delete(deleteUserOneDoc);
+  .delete(deleteUserOneDoc)
 
-export default router;
+export default router

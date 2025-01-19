@@ -1,16 +1,16 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import app from "./app.js";
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import app from './app.js'
 
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: './config.env' })
 
 // const password = encodeURIComponent();
 // console.log(password);
 
-mongoose.set("debug", true);
-console.log("DB", process.env.DATABASE);
+mongoose.set('debug', true)
+console.log('DB', process.env.DATABASE)
 //////////CONNECT TO DB/////////////
-const DB = process.env.DATABASE;
+const DB = process.env.DATABASE
 // const DB = process.env.DATABASE.replace(
 //   "<PASSWORD>",
 //   process.env.ENCODED_PASSWORD
@@ -18,8 +18,8 @@ const DB = process.env.DATABASE;
 
 mongoose
   .connect(DB)
-  .then(() => console.log("SUCCESSFULLY CONNECTED"))
-  .catch((err) => console.log(err));
+  .then(() => console.log('SUCCESSFULLY CONNECTED'))
+  .catch((err) => console.log(err))
 
 // (async () => {
 //   try {
@@ -57,15 +57,15 @@ mongoose
 
 /////////////////START SERVER/////////////////
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 
 const server = app.listen(port, () => {
-  console.log(`App running on port ${port}`);
-});
+  console.log(`App running on port ${port}`)
+})
 
-process.on("unhandledRejection", (err) => {
-  console.log("unhandledRejection", err.name, err.message);
+process.on('unhandledRejection', (err) => {
+  console.log('unhandledRejection', err.name, err.message)
   server.close(() => {
-    process.exit(1);
-  });
-});
+    process.exit(1)
+  })
+})
