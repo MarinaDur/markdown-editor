@@ -1,28 +1,43 @@
-name: CI Workflow
-
-on:
-  push:
-    branches:
-      - main # Run on pushes to the main branch
-  pull_request:
-    branches:
-      - main # Run on PRs to the main branch
-
 jobs:
-  eslint:
+  lint-client:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Set up Node.js for Client
         uses: actions/setup-node@v2
         with:
-          node-version: "20.17.0" # Specify your Node.js version
+          node-version: "16"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies for Client
+        run: |
+          cd client
+          npm install
 
-      - name: Run ESLint
-        run: npx eslint . --max-warnings=0
+      - name: Run ESLint for Client
+        run: |
+          cd client
+          npx eslint . --max-warnings=0
+
+  lint-server:
+    runs-on: ubuntu-latest
+    needs: lint-client # This makes lint-server run after lint-client
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js for Server
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Install dependencies for Server
+        run: |
+          cd server
+          npm install
+
+      - name: Run ESLint for Server
+        run: |
+          cd server
+          npx eslint . --max-warnings=0
