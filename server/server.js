@@ -15,6 +15,8 @@ const DB = process.env.DATABASE
 //   process.env.ENCODED_PASSWORD
 // );
 
+console.log(DB)
+
 mongoose
   .connect(DB)
   .then(() => console.log('SUCCESSFULLY CONNECTED'))
