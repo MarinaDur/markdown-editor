@@ -8,7 +8,6 @@ dotenv.config({ path: './config.env' })
 // console.log(password);
 
 mongoose.set('debug', true)
-console.log('DB', process.env.DATABASE)
 //////////CONNECT TO DB/////////////
 const DB = process.env.DATABASE
 // const DB = process.env.DATABASE.replace(
