@@ -72,15 +72,16 @@ function DeletePopup() {
   function handledeleteMarkdown() {
     if (
       documents &&
-      typeof currentDoc === "number" && // Ensure currentDoc is a valid number
+      typeof currentDoc === "number" &&
       currentDoc >= 0 &&
       currentDoc < documents.length
     ) {
-      const docToDelete = documents[currentDoc]; // Retrieve the document by index
+      const docToDelete = documents[currentDoc];
       mutation.mutate({ id: docToDelete._id });
-    } else {
-      console.error("Invalid document index or documents array is undefined.");
     }
+    // } else {
+    //   console.error("Invalid document index or documents array is undefined.");
+    // }
   }
 
   return (

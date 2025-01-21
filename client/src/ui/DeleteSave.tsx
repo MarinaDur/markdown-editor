@@ -60,7 +60,6 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
   const mutation = useMutation({
     mutationFn: updateDocument,
     onSuccess: (data: any) => {
-      // Update the local cache optimistically
       queryClient.setQueryData<MarkDownDocs[] | undefined>(
         ["documents"],
         (oldData) =>
@@ -69,7 +68,6 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
           ),
       );
 
-      // Optionally, invalidate the query to refetch the updated data from the server
       queryClient.invalidateQueries({ queryKey: ["documents"] });
     },
   });
@@ -81,9 +79,10 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
         name: docNameValue ?? "Untitled",
         content: markdownValue ?? "",
       });
-    } else {
-      console.error("Documents or current document is undefined.");
     }
+    // else {
+    //   console.error("Documents or current document is undefined.");
+    // }
   }
 
   return (

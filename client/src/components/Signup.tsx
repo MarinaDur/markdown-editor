@@ -49,7 +49,6 @@ function Signup() {
         handleError(error.response?.data?.message);
       } else {
         handleError("An unexpected error occurred");
-        console.error("An unexpected error occurred:", error);
       }
     },
     onSettled: () => {

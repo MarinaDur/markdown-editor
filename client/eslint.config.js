@@ -39,10 +39,10 @@ export default [
     ignores: ["eslint.config.js", "vite.config.ts"],
 
     rules: {
-      "no-console": "warn",
-      "no-unused-vars": "off",
+      "no-console": "error",
+      "no-unused-vars": ["warn", { args: "none" }],
       "prettier/prettier": "error",
-      "@/no-unused-vars": "warn", // Use TypeScript version of this rule
+      // "@/no-unused-vars": "warn", // Use TypeScript version of this rule
       // Use TypeScript version of this rule
       "react/jsx-uses-react": "off", // Disable React rules conflicting with Prettier
       "react/react-in-jsx-scope": "off", // Disable React rules conflicting with Prettier

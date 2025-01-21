@@ -2,7 +2,6 @@ import FontAwesomeIcons from "../ui/FoneAwsomeIcons";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "../utils/apiCalls";
-import axios from "axios";
 
 function Logout() {
   const navigate = useNavigate();
@@ -14,16 +13,16 @@ function Logout() {
       queryClient.clear();
       navigate("/");
     },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        // handleError(error.response?.data?.message);
-      } else {
-        // setIsLoggedIn(false);
+    // onError: (error) => {
+    //   if (axios.isAxiosError(error)) {
+    //     // handleError(error.response?.data?.message);
+    //   } else {
+    //     // setIsLoggedIn(false);
 
-        // handleError("An unexpected error occurred");
-        console.error("An unexpected error occurred:", error);
-      }
-    },
+    //     // handleError("An unexpected error occurred");
+    //     console.error("An unexpected error occurred:", error);
+    //   }
+    // },
   });
 
   function handleLogout() {
