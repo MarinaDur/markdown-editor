@@ -5,7 +5,7 @@ import flex from "../ui/Flex";
 import { useMarkdown } from "../context/MarkdownContext";
 
 const StyledColorTheme = styled.div`
-  /* width: 100%; */
+  width: 100%;
   margin-top: auto;
   ${flex}
   flex-direction: row;
@@ -16,6 +16,8 @@ const StyledColorTheme = styled.div`
 
 function ColorTheme() {
   const { isDarkMode, handleDarkMode } = useMarkdown();
+
+  console.log(isDarkMode);
 
   return (
     <StyledColorTheme>
