@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator'
 import crypto from 'crypto'
 import { promisify } from 'util'
 import jwt from 'jsonwebtoken'
@@ -7,7 +6,6 @@ import { catchAsync } from '../utils/catchAsync.js'
 import User from '../models/userModel.js'
 import { sendToken } from '../middlewares/createSendToken.js'
 import { AppError } from '../utils/appError.js'
-import { stat } from 'fs'
 import Email from '../utils/email.js'
 import Document from '../models/docModel.js'
 

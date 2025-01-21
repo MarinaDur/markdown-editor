@@ -6,7 +6,7 @@ const sanitizeInput = (input) => {
   return input.replace(/<[^>]*>/g, '')
 }
 
-export const createDefaultDocsOnSignup = catchAsync(async (req, res, next) => {
+export const createDefaultDocsOnSignup = catchAsync(async (req, res) => {
   const documents = [
     {
       createdAt: Date.now(),
@@ -33,7 +33,7 @@ export const createDefaultDocsOnSignup = catchAsync(async (req, res, next) => {
   })
 })
 
-export const postDoc = catchAsync(async (req, res, next) => {
+export const postDoc = catchAsync(async (req, res) => {
   const document = await Document.create({
     name: sanitizeInput(req.body.name),
     content: sanitizeInput(req.body.content),
@@ -48,7 +48,7 @@ export const postDoc = catchAsync(async (req, res, next) => {
   })
 })
 
-export const getUserDocs = catchAsync(async (req, res, next) => {
+export const getUserDocs = catchAsync(async (req, res) => {
   const documents = await Document.find({ user: req.user._id }).sort({
     createdAt: -1,
   })

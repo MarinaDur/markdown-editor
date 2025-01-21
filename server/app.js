@@ -110,7 +110,7 @@ app.use('/api/v1/users', userRouter)
 app.use('/api/v1/documents', docRouter)
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function (req, res) {
   res.status(404).json({ error: 'Not Found' })
 })
 
