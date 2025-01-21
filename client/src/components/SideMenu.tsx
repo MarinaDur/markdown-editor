@@ -66,7 +66,7 @@ function SideMenu() {
 
       queryClient.setQueryData(
         ["documents"],
-        (old: MarkDownDocs[] | undefined) => [...(old || []), newDoc]
+        (old: MarkDownDocs[] | undefined) => [...(old || []), newDoc],
       );
 
       return { previousDocs };

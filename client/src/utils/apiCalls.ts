@@ -30,7 +30,7 @@ export async function updateDocument({
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   if (response.data.status === "success") {
@@ -50,7 +50,7 @@ export async function createDocument({
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   if (response.data.status === "success") {
@@ -69,7 +69,7 @@ export async function deleteDocument({
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   if (response.data.status === "success") {
@@ -89,7 +89,7 @@ export async function login({ email, password }: UserLogin): Promise<any> {
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   return response?.data;
@@ -138,7 +138,7 @@ export async function signup({
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   return response?.data;
@@ -153,7 +153,7 @@ export async function forgotPassword({ email }: Email): Promise<any> {
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   return response;
@@ -173,7 +173,7 @@ export async function resetPassword({
     {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
-    }
+    },
   );
 
   return response;

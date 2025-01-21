@@ -65,8 +65,8 @@ function DeleteSave({ document }: { document: MarkDownDocs }) {
         ["documents"],
         (oldData) =>
           oldData?.map((doc) =>
-            doc._id === data._id ? { ...doc, ...data } : doc
-          )
+            doc._id === data._id ? { ...doc, ...data } : doc,
+          ),
       );
 
       // Optionally, invalidate the query to refetch the updated data from the server

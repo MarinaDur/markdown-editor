@@ -19,7 +19,7 @@ interface MarkdownContextProps {
   handleCurrentDoc: (
     docIndex: number,
     docId: string,
-    documents: MarkDownDocs[]
+    documents: MarkDownDocs[],
   ) => void;
   currentDoc: number | undefined;
   docNameValue: string | undefined;
@@ -68,7 +68,7 @@ interface MarkdownProviderProps {
 }
 
 const MarkdownContext = createContext<MarkdownContextProps | undefined>(
-  undefined
+  undefined,
 );
 
 function MarkdownProvider({ children }: MarkdownProviderProps) {
@@ -76,7 +76,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   const [isPreview, setIsPreview] = useState<boolean>(false);
   const [markdownValue, setMarkdownValue] = useState<string>("");
   const [currentDoc, setCurrentDoc] = useState<number | undefined>(
-    () => Number(localStorage.getItem("currentDoc")) || 0
+    () => Number(localStorage.getItem("currentDoc")) || 0,
   );
   const [currentDocId, setCurrentDocId] = useState<string | undefined>("");
   const [docNameValue, setDocNamevalue] = useState<string | undefined>("");
@@ -112,7 +112,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
       setIsMenuOpen(false);
       setDocNamevalue(documents[docIndex]?.name);
     },
-    []
+    [],
   );
 
   function handleChangeName(e: ChangeEvent<HTMLInputElement>) {
@@ -177,7 +177,7 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
         document.documentElement.classList.remove("dark-mode");
       }
     },
-    [isDarkMode]
+    [isDarkMode],
   );
 
   const contextValue: MarkdownContextProps = {

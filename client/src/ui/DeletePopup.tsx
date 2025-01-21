@@ -49,7 +49,7 @@ function DeletePopup() {
       ]);
 
       queryClient.setQueryData(["documents"], (oldDocs: MarkDownDocs[]) =>
-        oldDocs.filter((doc) => doc._id !== deletedDocId)
+        oldDocs.filter((doc) => doc._id !== deletedDocId),
       );
 
       return { previousDocs };

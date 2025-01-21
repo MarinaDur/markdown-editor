@@ -108,7 +108,7 @@ function Header({ documents }: Document) {
                   value={docNameValue}
                   // handleBlur={handleInputBlur}
                 />
-              )
+              ),
           )}
         </StyledCon>
         <StyledDeleteSaveLogoutCon>

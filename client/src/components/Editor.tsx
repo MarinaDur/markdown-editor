@@ -66,8 +66,7 @@ const StyledTextArea = styled(TextareaAutosize)`
 `;
 
 function Editor() {
-  const { markdownValue, handleEditor, isPreview } =
-    useMarkdown();
+  const { markdownValue, handleEditor, isPreview } = useMarkdown();
 
   return (
     <StyledEditor $isPreview={isPreview} className="editor">
