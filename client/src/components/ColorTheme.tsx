@@ -17,9 +17,6 @@ const StyledColorTheme = styled.div`
 function ColorTheme() {
   const { isDarkMode, handleDarkMode } = useMarkdown();
 
-  console.log(isDarkMode);
-  console.log("hello");
-
   return (
     <StyledColorTheme>
       <Svg
