@@ -34,7 +34,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://markdowneditorfullstack.netlify.app/)
+- Live Site URL: [https://markdowneditorfullstack.netlify.app/](https://markdowneditorfullstack.netlify.app/)
 
 ## My process
 
