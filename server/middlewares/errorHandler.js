@@ -121,7 +121,7 @@ const cloneError = (err) => {
 }
 
 // Main Error Handler
-const globalErrorHandler = (err, req, res) => {
+const globalErrorHandler = (err, req, res, next) => {
   console.log('Caught Error:', err.statusCode)
   err.statusCode = err.statusCode || 500
   err.status = err.status || 'error'
