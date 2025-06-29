@@ -18,9 +18,16 @@ export const sendToken = (user, statusCode, res, defaultDocsError = false) => {
     path: '/',
   }
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true
-  res.cookie('jwt', token, cookieOptions)
+  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true
+  // res.cookie('jwt', token, cookieOptions)
   // res.header("Access-Control-Allow-Credentials", true);
+
+  if (process.env.NODE_ENV === 'production') {
+    const cookieString = `jwt=${token}; Path=/; HttpOnly; Secure; SameSite=None; Expires=${expires.toUTCString()}; Partitioned`
+    res.setHeader('Set-Cookie', cookieString)
+  } else {
+    res.cookie('jwt', token, cookieOptions)
+  }
 
   user.password = undefined
 
