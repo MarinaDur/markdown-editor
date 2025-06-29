@@ -8,19 +8,17 @@ export const createToken = (id) =>
 export const sendToken = (user, statusCode, res, defaultDocsError = false) => {
   const token = createToken(user._id)
   // console.log(token);
+  const expires = new Date(
+    Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+  )
+
   const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
-    ),
+    expires,
     httpOnly: true,
     secure: true,
     sameSite: 'none',
     path: '/',
   }
-
-  const expires = new Date(
-    Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
-  )
 
   // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true
   // res.cookie('jwt', token, cookieOptions)
