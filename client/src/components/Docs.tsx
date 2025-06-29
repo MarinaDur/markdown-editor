@@ -13,6 +13,7 @@ interface MarkDownDocs {
   _id: string;
 }
 
+//comment: This component fetches and displays a list of markdown documents.
 const StyledDocs = styled.div`
   ${flex}
   gap: 2.7rem;
